@@ -1,0 +1,108 @@
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import MenuBlogNavBar from '../components/MenuBlogNavBar/MenuBlogNavBar';
+import MenuBlogList from '../components/MenuBlogList/MenuBlogList';
+import { getId } from '../../Login/LoginReducer';
+import { Modal, Button, Form, FormGroup, FormControl, Col, Row, ControlLabel, Panel, HelpBlock } from 'react-bootstrap';
+import { fetchMenuBlog, createMenuBlog } from '../MenuBlogActions';
+import { getSearch, getCurrentPage } from '../MenuBlogReducer';
+
+class MenuBlog extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isCreateMenuBlog: false,
+      isCreatingMenuBlog: false,
+
+      title: '',
+      metaKeyword: '',
+      metaDescription: '',
+      description: '',
+    }
+  }
+  componentWillMount() {
+    if (this.props.id === '') {
+      this.context.router.push('/');
+    }
+  }
+  onCreateMenuBlog = () => {
+    this.setState({ isCreateMenuBlog: true });
+  };
+  hideCreateMenuBlog = () => {
+    this.setState({ isCreateMenuBlog: false });
+  };
+  creatingMenuBlog = () => {
+    const topic = {
+      title: this.state.title,
+    };
+    this.setState({ isCreatingMenuBlog: true });
+    this.props.dispatch(createMenuBlog(topic)).then((res) => {
+      this.setState({ isCreatingMenuBlog: false, isCreateMenuBlog: false });
+      this.props.dispatch(fetchMenuBlog(this.props.currentPage - 1))
+    });
+  };
+
+  handleTitle = (event) => { this.setState({ title: event.target.value }); };
+  render() {
+    return (
+      <div>
+        <Row>
+          <MenuBlogNavBar onCreateMenuBlog={this.onCreateMenuBlog}/>
+        </Row>
+        <Row>
+          <MenuBlogList />
+        </Row>
+
+        <Modal
+          show={this.state.isCreateMenuBlog}
+          onHide={this.hideCreateMenuBlog}
+        >
+          <Modal.Header>
+            <Modal.Title>Tạo danh mục mới</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form horizontal>
+              <FormGroup>
+                <Col componentClass={ControlLabel} sm={2}>
+                  Tên chuyên mục
+                </Col>
+                <Col sm={10}>
+                  <FormControl
+                    type="text"
+                    value={this.state.title}
+                    onChange={this.handleTitle}
+                  />
+                </Col>
+              </FormGroup>
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.hideCreateMenuBlog} disabled={this.state.isCreatingMenuBlog}>Hủy</Button>
+            <Button bsStyle="primary" onClick={this.creatingMenuBlog} disabled={this.state.isCreatingMenuBlog}>Tạo</Button>
+          </Modal.Footer>
+        </Modal>
+      </div>
+    );
+  }
+}
+
+// Retrieve data from store as props
+function mapStateToProps(state) {
+  return {
+    id: getId(state),
+    currentPage: getCurrentPage(state),
+  };
+}
+
+MenuBlog.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  currentPage: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
+};
+
+MenuBlog.contextTypes = {
+  router: PropTypes.object,
+};
+
+export default connect(mapStateToProps)(MenuBlog);
