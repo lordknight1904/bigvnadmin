@@ -65,7 +65,7 @@ export class App extends Component {
               ) : (
                 <div className={styles.container}>
                   <Col md={12}>
-                    <Menu/>
+                    <Menu />
                   </Col>
                   <Col md={12}>
                     {this.props.children}

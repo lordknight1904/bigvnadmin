@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormControl, Button, Table, Checkbox } from 'react-bootstrap';
+import { Table, Checkbox } from 'react-bootstrap';
 import { fetchCities, toggleCity } from '../../CityActions';
-import { getCities, getSearch, getCurrentPage } from '../../CityReducer';
+import { getCities, getCurrentPage } from '../../CityReducer';
 import { getId } from '../../../Login/LoginReducer';
-import { setNotify } from '../../../App/AppActions';
-
+import styles from '../../../../main.css';
 class CityList extends Component {
   constructor(props) {
     super(props);
@@ -18,26 +17,26 @@ class CityList extends Component {
     const city = {
       id,
     };
-    this.props.dispatch(toggleCity(city)).then(()  => {
+    this.props.dispatch(toggleCity(city)).then(() => {
       this.props.dispatch(fetchCities(this.props.currentPage - 1));
     });
   };
   render() {
     return (
-      <Table striped bordered condensed hover>
+      <Table striped bordered condensed hover className={styles.table}>
         <thead>
-        <tr>
-          <th>Tên Tỉnh/Thành</th>
-          <th>Ngày tạo</th>
-          <th>Thao tác</th>
-        </tr>
+          <tr>
+            <th>Tên Tỉnh/Thành</th>
+            <th>Ngày tạo</th>
+            <th className={styles.tableButtonCol}>Thao tác</th>
+          </tr>
         </thead>
         <tbody>
         {
           this.props.cities.map((city, index) => {
             const date = new Date(city.dateCreated);
-            const hours =  date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
-            const minutes =  date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
+            const hours = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
+            const minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
             const time = `${date.getDay()}/${date.getMonth()}/${date.getFullYear()} ${hours}:${minutes}`;
             return (
               <tr key={index}>
@@ -47,7 +46,7 @@ class CityList extends Component {
                   <Checkbox checked={city.disable} onClick={() => this.onToggle(city._id)} />
                 </td>
               </tr>
-            )
+            );
           })
         }
         </tbody>

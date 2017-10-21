@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormControl, Button, Table, Checkbox } from 'react-bootstrap';
+import { Table, Checkbox } from 'react-bootstrap';
 import { fetchWards, toggleWard } from '../../WardActions';
 import { getWards, getCurrentPage, getDistrictId } from '../../WardReducer';
 import { getId } from '../../../Login/LoginReducer';
-import { setNotify } from '../../../App/AppActions';
-
+// import { setNotify } from '../../../App/AppActions';
+import styles from '../../../../main.css';
 class WardList extends Component {
   constructor(props) {
     super(props);
@@ -20,7 +20,7 @@ class WardList extends Component {
     const ward = {
       id,
     };
-    this.props.dispatch(toggleWard(ward)).then(()  => {
+    this.props.dispatch(toggleWard(ward)).then(() => {
       if (this.props.districtId && this.props.districtId !== '') {
         this.props.dispatch(fetchWards(this.props.districtId, this.props.currentPage - 1));
       }
@@ -28,20 +28,20 @@ class WardList extends Component {
   };
   render() {
     return (
-      <Table striped bordered condensed hover>
+      <Table striped bordered condensed hover className={styles.table}>
         <thead>
-        <tr>
-          <th>Tên Quận/Huyện</th>
-          <th>Ngày tạo</th>
-          <th>Thao tác</th>
-        </tr>
+          <tr>
+            <th>Tên Quận/Huyện</th>
+            <th>Ngày tạo</th>
+            <th className={styles.tableButtonCol}>Thao tác</th>
+          </tr>
         </thead>
         <tbody>
         {
           this.props.wards.map((ward, index) => {
             const date = new Date(ward.dateCreated);
-            const hours =  date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
-            const minutes =  date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
+            const hours = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
+            const minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
             const time = `${date.getDay()}/${date.getMonth()}/${date.getFullYear()} ${hours}:${minutes}`;
             return (
               <tr key={index}>
@@ -51,7 +51,7 @@ class WardList extends Component {
                   <Checkbox checked={ward.disable} onClick={() => this.onToggle(ward._id)} />
                 </td>
               </tr>
-            )
+            );
           })
         }
         </tbody>
@@ -75,7 +75,7 @@ WardList.propTypes = {
   currentPage: PropTypes.number.isRequired,
   id: PropTypes.string.isRequired,
   districtId: PropTypes.string.isRequired,
-
+  wards: PropTypes.array,
   showDialog: PropTypes.func.isRequired,
 };
 

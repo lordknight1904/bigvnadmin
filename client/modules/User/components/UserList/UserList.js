@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormControl, Button, Table, Checkbox } from 'react-bootstrap';
+import { Table, Checkbox } from 'react-bootstrap';
 import { fetchUserSearch, toggleBlogger, toggleNewser } from '../../UserActions';
 import { getUsers, getSearch, getCurrentPage } from '../../UserReducer';
 import { getId } from '../../../Login/LoginReducer';
-import { setNotify } from '../../../App/AppActions';
-
+// import { setNotify } from '../../../App/AppActions';
+import styles from '../../../../main.css';
 class UserList extends Component {
   constructor(props) {
     super(props);
@@ -32,24 +32,24 @@ class UserList extends Component {
   };
   render() {
     return (
-      <Table striped bordered condensed hover>
+      <Table striped bordered condensed hover className={styles.table}>
         <thead>
-        <tr>
-          <th>Tên tài khoản</th>
-          <th>Tên người dùng</th>
-          <th>Liên kết Fb</th>
-          <th>Liên kết G+</th>
-          <th>Newser</th>
-          <th>Blogger</th>
-          <th>Ngày tạo</th>
-        </tr>
+          <tr>
+            <th>Tên tài khoản</th>
+            <th>Tên người dùng</th>
+            <th>Liên kết Fb</th>
+            <th>Liên kết G+</th>
+            <th>Newser</th>
+            <th>Blogger</th>
+            <th>Ngày tạo</th>
+          </tr>
         </thead>
         <tbody>
         {
           this.props.users.map((a, index) => {
             const date = new Date(a.dateCreated);
-            const hours =  date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
-            const minutes =  date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
+            const hours = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
+            const minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
             const time = `${date.getDay()}/${date.getMonth()}/${date.getFullYear()} ${hours}:${minutes}`;
             return (
               <tr key={index}>
@@ -69,7 +69,7 @@ class UserList extends Component {
                 </td>
                 <td>{time}</td>
               </tr>
-            )
+            );
           })
         }
         </tbody>

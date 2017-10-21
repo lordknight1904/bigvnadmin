@@ -40,7 +40,7 @@ class BannerNavBar extends Component {
               last
               boundaryLinks
               activePage={this.props.currentPage}
-              items={ (this.props.banners.length === 0) ? 1 : Math.ceil(this.props.banners.length / 10)}
+              items={(this.props.banners.length === 0) ? 1 : Math.ceil(this.props.banners.length / 10)}
               maxButtons={5}
               onSelect={this.hanldePage}
             />

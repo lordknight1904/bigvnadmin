@@ -5,8 +5,8 @@ import { FormControl, Button, Table, Checkbox } from 'react-bootstrap';
 import { fetchMenuBlog, toggleTopic } from '../../MenuBlogActions';
 import { getMenuBlogs, getCurrentPage } from '../../MenuBlogReducer';
 import { getId } from '../../../Login/LoginReducer';
-import { setNotify } from '../../../App/AppActions';
-
+//import { setNotify } from '../../../App/AppActions';
+import styles from '../../../../main.css';
 class MenuBlogList extends Component {
   constructor(props) {
     super(props);
@@ -20,25 +20,25 @@ class MenuBlogList extends Component {
     };
     this.props.dispatch(toggleTopic(topic)).then(() => {
       this.props.dispatch(fetchMenuBlog(this.props.currentPage - 1));
-    })
+    });
   };
   render() {
     return (
-      <Table striped bordered condensed hover>
+      <Table striped bordered condensed hover className={styles.table}>
         <thead>
-        <tr>
-          <th>Tiêu đề</th>
-          <th>Alias</th>
-          <th>Ngày tạo</th>
-          <th>Thao tác</th>
-        </tr>
+          <tr>
+            <th>Tiêu đề</th>
+            <th>Alias</th>
+            <th>Ngày tạo</th>
+            <th className={styles.tableButtonCol}>Thao tác</th>
+          </tr>
         </thead>
         <tbody>
         {
           this.props.menuBlogs.map((menu, index) => {
             const date = new Date(menu.dateCreated);
-            const hours =  date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
-            const minutes =  date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
+            const hours = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
+            const minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
             const time = `${date.getDay()}/${date.getMonth()}/${date.getFullYear()} ${hours}:${minutes}`;
             return (
               <tr key={index}>
@@ -49,7 +49,7 @@ class MenuBlogList extends Component {
                   <Checkbox checked={menu.disable} onChange={() => this.onToggle(menu._id)} />
                 </td>
               </tr>
-            )
+            );
           })
         }
         </tbody>

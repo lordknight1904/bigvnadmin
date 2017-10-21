@@ -38,3 +38,37 @@ body {
 .modal-container .modal, .modal-container .modal-backdrop {
   position: absolute;
 }
+
+.table {
+
+}
+.table >thead {
+  background-color: #093750;
+  color: #fff;
+}
+.table >thead >tr >th {
+  text-align: center;
+}
+.tableButtonCol {
+  width: 70px;
+}
+.table >tbody tr:hover td{
+  background-color: #fafbde;
+}
+.headerLogin {
+  border-bottom: 1px solid #ccc;
+  text-align: center;
+}
+.loginPanel {
+  padding: 0px;
+  margin:0;
+}
+.inputRegistryButton {
+  text-align: center;
+  width: 100%;
+  background-color: #349708;
+  border: 0;
+  color: #FFF;
+  padding: 7px;
+  position: relative;
+}

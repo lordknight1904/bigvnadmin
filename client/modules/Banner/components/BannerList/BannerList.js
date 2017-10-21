@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormControl, Button, Table, Checkbox, Glyphicon } from 'react-bootstrap';
+import { Button, Table, Checkbox } from 'react-bootstrap';
 import { fetchBanners, uploadBanner, toggleBanner } from '../../BannerActions';
 import { getBanners, getSearch, getCurrentPage } from '../../BannerReducer';
 import { getId } from '../../../Login/LoginReducer';
 import { setNotify } from '../../../App/AppActions';
-
+import styles from '../../../../main.css';
 class BannerList extends Component {
   constructor(props) {
     super(props);
@@ -25,7 +25,7 @@ class BannerList extends Component {
     const banner = {
       id,
     };
-    this.props.dispatch(toggleBanner(banner)).then((res)  => {
+    this.props.dispatch(toggleBanner(banner)).then(() => {
       this.props.dispatch(fetchBanners(this.props.search, this.props.currentPage - 1));
     });
   };
@@ -52,22 +52,22 @@ class BannerList extends Component {
   };
   render() {
     return (
-      <Table striped bordered condensed hover>
+      <Table striped bordered condensed hover className={styles.table}>
         <thead>
-        <tr>
-          <th>Tên</th>
-          <th>Mô tả</th>
-          <th>Ngày tạo</th>
-          <th>Preview</th>
-          <th>Thao tác</th>
-        </tr>
+          <tr>
+            <th>Tên</th>
+            <th>Mô tả</th>
+            <th>Ngày tạo</th>
+            <th>Preview</th>
+            <th className={styles.tableButtonCol}>Thao tác</th>
+          </tr>
         </thead>
         <tbody>
         {
           this.props.banners.map((a, index) => {
             const date = new Date(a.dateCreated);
-            const hours =  date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
-            const minutes =  date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
+            const hours = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
+            const minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
             const time = `${date.getDay()}/${date.getMonth()}/${date.getFullYear()} ${hours}:${minutes}`;
             return (
               <tr key={index}>
@@ -76,7 +76,7 @@ class BannerList extends Component {
                 <td>{time}</td>
                 <td>
                   <div style={{ textAlign: 'center' }}>
-                    <img width={150} height={150} src={`/banner/${a.imageDirectory}`} />
+                    <img role="presentation" width={150} height={150} src={`/banner/${a.imageDirectory}`} />
                   </div>
                 </td>
                 <td>
@@ -95,7 +95,7 @@ class BannerList extends Component {
                   <Checkbox checked={a.disable} onClick={() => this.onToggle(a._id)} />
                 </td>
               </tr>
-            )
+            );
           })
         }
         </tbody>

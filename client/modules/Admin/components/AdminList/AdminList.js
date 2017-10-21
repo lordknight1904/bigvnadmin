@@ -6,7 +6,7 @@ import { getAdminSearch } from '../../AdminActions';
 import { getAdmin, getSearch, getCurrentPage } from '../../AdminReducer';
 import { getId } from '../../../Login/LoginReducer';
 import { setNotify } from '../../../App/AppActions';
-
+import styles from '../../../../main.css';
 class AdminList extends Component {
   constructor(props) {
     super(props);
@@ -23,14 +23,14 @@ class AdminList extends Component {
   };
   render() {
     return (
-      <Table striped bordered condensed hover>
+      <Table striped bordered condensed hover className={styles.table}>
         <thead>
-        <tr>
-          <th>Tên tài khoản</th>
-          <th>Chức vụ</th>
-          <th>Ngày tạo</th>
-          <th>Thao tác</th>
-        </tr>
+          <tr>
+            <th>Tên tài khoản</th>
+            <th>Chức vụ</th>
+            <th>Ngày tạo</th>
+            <th className={styles.tableButtonCol}>Thao tác</th>
+          </tr>
         </thead>
         <tbody>
         {

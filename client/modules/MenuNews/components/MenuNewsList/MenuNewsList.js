@@ -6,7 +6,7 @@ import { fetchMenuNews } from '../../MenuNewsActions';
 import { getMenuNews, getCurrentPage } from '../../MenuNewsReducer';
 import { getId } from '../../../Login/LoginReducer';
 import { setNotify } from '../../../App/AppActions';
-
+import styles from '../../../../main.css';
 class MenuNewsList extends Component {
   constructor(props) {
     super(props);
@@ -19,23 +19,23 @@ class MenuNewsList extends Component {
   };
   render() {
     return (
-      <Table striped bordered condensed hover>
+      <Table striped bordered condensed hover className={styles.table}>
         <thead>
-        <tr>
-          <th>Id</th>
-          <th>Tiêu đề</th>
-          <th>alias</th>
-          <th>Mô tả</th>
-          <th>status</th>
-          <th>Ngày tạo</th>
-        </tr>
+          <tr>
+            <th>Id</th>
+            <th>Tiêu đề</th>
+            <th>alias</th>
+            <th>Mô tả</th>
+            <th>status</th>
+            <th>Ngày tạo</th>
+          </tr>
         </thead>
         <tbody>
         {
           this.props.menuNews.map((menu, index) => {
             const date = new Date(menu.createTime);
-            const hours =  date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
-            const minutes =  date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
+            const hours = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
+            const minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
             const time = `${date.getDay()}/${date.getMonth()}/${date.getFullYear()} ${hours}:${minutes}`;
             return (
               <tr key={index}>
@@ -46,7 +46,7 @@ class MenuNewsList extends Component {
                 <td>{menu.status}</td>
                 <td>{time}</td>
               </tr>
-            )
+            );
           })
         }
         </tbody>

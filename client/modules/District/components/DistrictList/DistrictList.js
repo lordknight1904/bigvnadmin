@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormControl, Button, Table, Checkbox } from 'react-bootstrap';
+import { Table, Checkbox } from 'react-bootstrap';
 import { fetchDistricts, toggleDistrict } from '../../DistrictActions';
 import { getDistricts, getCurrentPage, getCityId } from '../../DistrictReducer';
 import { getId } from '../../../Login/LoginReducer';
-import { setNotify } from '../../../App/AppActions';
+// import { setNotify } from '../../../App/AppActions';
 import { getCities } from '../../../City/CityReducer';
-
+import styles from '../../../../main.css';
 class DistrictList extends Component {
   constructor(props) {
     super(props);
@@ -21,7 +21,7 @@ class DistrictList extends Component {
     const district = {
       id,
     };
-    this.props.dispatch(toggleDistrict(district)).then(()  => {
+    this.props.dispatch(toggleDistrict(district)).then(() => {
       if (this.props.cityId && this.props.cityId !== '') {
         this.props.dispatch(fetchDistricts(this.props.cityId, this.props.currentPage - 1));
       }
@@ -29,20 +29,20 @@ class DistrictList extends Component {
   };
   render() {
     return (
-      <Table striped bordered condensed hover>
+      <Table striped bordered condensed hover className={styles.table}>
         <thead>
-        <tr>
-          <th>Tên Quận/Huyện</th>
-          <th>Ngày tạo</th>
-          <th>Thao tác</th>
-        </tr>
+          <tr>
+            <th>Tên Quận/Huyện</th>
+            <th>Ngày tạo</th>
+            <th className={styles.tableButtonCol}>Thao tác</th>
+          </tr>
         </thead>
         <tbody>
         {
           this.props.districts.map((district, index) => {
             const date = new Date(district.dateCreated);
-            const hours =  date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
-            const minutes =  date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
+            const hours = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
+            const minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
             const time = `${date.getDay()}/${date.getMonth()}/${date.getFullYear()} ${hours}:${minutes}`;
             return (
               <tr key={index}>
@@ -52,7 +52,7 @@ class DistrictList extends Component {
                   <Checkbox checked={district.disable} onClick={() => this.onToggle(district._id)} />
                 </td>
               </tr>
-            )
+            );
           })
         }
         </tbody>

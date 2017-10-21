@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormControl, Button, Table, Checkbox, Glyphicon, OverlayTrigger, Tooltip, DropdownButton, MenuItem } from 'react-bootstrap';
+import { Button, Table, Checkbox, Glyphicon, OverlayTrigger, Tooltip, DropdownButton, MenuItem } from 'react-bootstrap';
 import { fetchNews, toggleNews, vipNews } from '../../NewsActions';
 import { getCurrentPage, getNews, getCategory } from '../../NewsReducer';
 import { getId } from '../../../Login/LoginReducer';
-import { setNotify } from '../../../App/AppActions';
-
+// import { setNotify } from '../../../App/AppActions';
+import styles from '../../../../main.css';
 class NewList extends Component {
   constructor(props) {
     super(props);
@@ -15,7 +15,7 @@ class NewList extends Component {
     const news = {
       id,
     };
-    this.props.dispatch(toggleNews(news)).then(()  => {
+    this.props.dispatch(toggleNews(news)).then(() => {
       if (this.props.category !== 'Chọn danh mục') {
         this.props.dispatch(fetchNews(this.props.category, this.props.currentPage - 1));
       } else {
@@ -34,32 +34,32 @@ class NewList extends Component {
       } else {
         this.props.dispatch(fetchNews('', this.props.currentPage - 1));
       }
-    })
+    });
   };
   render() {
     const seoTooltip = (
-      <Tooltip id="tooltip" label='seoTooltip'>Thông tin SEO</Tooltip>
+      <Tooltip id="tooltip" label="seoTooltip">Thông tin SEO</Tooltip>
     );
     const infoTooltip = (
-    <Tooltip id="tooltip" label='infoTooltip'>Preview tin</Tooltip>
+      <Tooltip id="tooltip" label="infoTooltip">Preview tin</Tooltip>
     );
     return (
-      <Table striped bordered condensed hover>
+      <Table striped bordered condensed hover className={styles.table}>
         <thead>
-        <tr>
-          <th>Tiêu đề</th>
-          <th>Ngày tạo</th>
-          <th>Đã duyệt</th>
-          <th>VIP</th>
-          <th>Thao tác</th>
-        </tr>
+          <tr>
+            <th>Tiêu đề</th>
+            <th>Ngày tạo</th>
+            <th>Đã duyệt</th>
+            <th>VIP</th>
+            <th className={styles.tableButtonCol}>Thao tác</th>
+          </tr>
         </thead>
         <tbody>
         {
           this.props.news.map((n, index) => {
             const date = new Date(n.dateCreated);
-            const hours =  date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
-            const minutes =  date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
+            const hours = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
+            const minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
             const time = `${date.getDay()}/${date.getMonth()}/${date.getFullYear()} ${hours}:${minutes}`;
             return (
               <tr key={index}>
@@ -70,9 +70,9 @@ class NewList extends Component {
                 </td>
                 <td>
                   <DropdownButton title={n.vip} id="bg-nested-dropdown" disabled={!n.approved}>
-                    <MenuItem onClick={(eventKey) => this.onVip(n._id, 'none')} >None</MenuItem>
-                    <MenuItem onClick={(eventKey) => this.onVip(n._id, 'category')} >Category</MenuItem>
-                    <MenuItem onClick={(eventKey) => this.onVip(n._id, 'all')} >All</MenuItem>
+                    <MenuItem onClick={() => this.onVip(n._id, 'none')} >None</MenuItem>
+                    <MenuItem onClick={() => this.onVip(n._id, 'category')} >Category</MenuItem>
+                    <MenuItem onClick={() => this.onVip(n._id, 'all')} >All</MenuItem>
                   </DropdownButton>
                 </td>
                 <td>
@@ -84,7 +84,7 @@ class NewList extends Component {
                   </OverlayTrigger>
                 </td>
               </tr>
-            )
+            );
           })
         }
         </tbody>

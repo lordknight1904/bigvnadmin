@@ -1,26 +1,23 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Form, FormGroup, FormControl, Col, Row, Button, ControlLabel, Panel, HelpBlock } from 'react-bootstrap';
+import { Form, FormGroup, FormControl, Col, Button, ControlLabel, Panel, HelpBlock } from 'react-bootstrap';
 import { loginRequest } from '../LoginActions';
-import {  } from '../LoginReducer';
+// import {  } from '../LoginReducer';
 import { fetchCities } from '../../City/CityActions';
-
+import styles from '../../../main.css';
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
       userName: '',
       password: '',
-
       userNameError: '',
       passwordError: '',
-
       isSigningIn: false,
       error: '',
     };
   }
-
   onSigningIn = () => {
     const admin = {
       userName: this.state.userName,
@@ -40,17 +37,21 @@ class Login extends Component {
           break;
         }
         default: {
-
+          break;
         }
       }
-    })
+    });
   };
-
+  onKeyDown = (event) => {
+    if (event.keyCode === 13) {
+      this.onSigningIn();
+    }
+  };
   handleUserName = (event) => {
     if (event.target.value.trim() === '') {
       this.setState({ userName: event.target.value.trim(), userNameError: 'Trường này không được trống.' });
     } else {
-      this.setState({ userName: event.target.value.trim(), userNameError: ''});
+      this.setState({ userName: event.target.value.trim(), userNameError: '' });
     }
   };
   handlePassword = (event) => {
@@ -62,34 +63,29 @@ class Login extends Component {
   };
   handleUserNameBlur = (event) => {
     if (event.target.value.trim() === '') {
-      this.setState({ userNameError: 'Trường này không được trống.'});
+      this.setState({ userNameError: 'Trường này không được trống.' });
     } else {
-      this.setState({ userNameError: ''});
+      this.setState({ userNameError: '' });
     }
   };
   handlePasswordBlur = (event) => {
     if (event.target.value.trim() === '') {
-      this.setState({ passwordError: 'Trườg này không được trống.'});
+      this.setState({ passwordError: 'Trườg này không được trống.' });
     } else {
-      this.setState({ passwordError: ''});
+      this.setState({ passwordError: '' });
     }
   };
-  onKeyDown = (event) => {
-    if (event.keyCode === 13) {
-      this.onSigningIn();
-    }
-  };
-
   render() {
     return (
       <Col xs={4} xsOffset={4} style={{ top: '35%' }}>
-        <Panel>
-          <Form horizontal>
+        <div className={`panel panel-default ${styles.loginPanel}`} >
+          <div className={`panel-heading ${styles.headerLogin}`}><h2>Đăng nhập</h2></div>
+          <Form horizontal className="panel-body">
             <FormGroup controlId="formHorizontalEmail">
-              <Col componentClass={ControlLabel} sm={2}>
-                Tên tài khoản
+              <Col componentClass={ControlLabel} sm={4}>
+                Tài khoản
               </Col>
-              <Col sm={10}>
+              <Col sm={8}>
                 <FormControl
                   type="text"
                   value={this.state.userName}
@@ -99,12 +95,11 @@ class Login extends Component {
                 />
               </Col>
             </FormGroup>
-
             <FormGroup controlId="formHorizontalPassword">
-              <Col componentClass={ControlLabel} sm={2}>
+              <Col componentClass={ControlLabel} sm={4}>
                 Mật khẩu
               </Col>
-              <Col sm={10}>
+              <Col sm={8}>
                 <FormControl
                   type="password"
                   value={this.state.password}
@@ -116,26 +111,26 @@ class Login extends Component {
             </FormGroup>
 
             <FormGroup>
-              <Col smOffset={2} sm={10}>
-                <Button disabled={this.state.isSigningIn} onClick={this.onSigningIn}>
-                  Đăng nhập
-                </Button>
+              <Col smOffset={4} sm={8}>
+                <button disabled={this.state.isSigningIn} onClick={this.onSigningIn} className={styles.inputRegistryButton}>
+                  ĐĂNG NHẬP
+                </button>
               </Col>
             </FormGroup>
 
-            <FormGroup controlId="error" validationState='error' >
+            <FormGroup controlId="error" validationState="error" >
               <Col sm={6} smOffset={3} >
                 <HelpBlock>{this.state.error}</HelpBlock>
               </Col>
             </FormGroup>
           </Form>
-        </Panel>
+        </div>
       </Col>
     );
   }
 }
 // Retrieve data from store as props
-function mapStateToProps(state) {
+function mapStateToProps() {
   return {
   };
 }
