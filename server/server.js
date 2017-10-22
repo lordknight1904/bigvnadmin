@@ -22,6 +22,7 @@ if (process.env.NODE_ENV === 'development') {
 app.use('/photo', Express.static('../bigvn/public'));
 app.use('/images', Express.static('../bigvn/client/images'));
 app.use('/banner', Express.static('./banner'));
+app.use('/blog', Express.static('./blog'));
 
 // React And Redux Setup
 import { configureStore } from '../client/store';
@@ -44,6 +45,7 @@ import news from './routes/news.routes';
 import banners from './routes/banner.routes';
 import categories from './routes/category.routes';
 import topics from './routes/topic.routes';
+import blogs from './routes/blog.routes';
 import serverConfig from './config';
 
 // Set native promises as mongoose promise
@@ -65,7 +67,7 @@ app.use(compression());
 app.use(bodyParser.json({ limit: '20mb' }));
 app.use(bodyParser.urlencoded({ limit: '20mb', extended: false }));
 app.use(Express.static(path.resolve(__dirname, '../dist/client')));
-app.use('/api', [topics, news, banners, cities, districts, categories, wards, admins, users]);
+app.use('/api', [topics, blogs, news, banners, cities, districts, categories, wards, admins, users]);
 
 // Render Initial HTML
 const renderFullPage = (html, initialState) => {
