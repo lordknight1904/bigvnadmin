@@ -48,9 +48,6 @@ class Menu extends Component{
         <NavItem eventKey="banner">
           Quảng cáo
         </NavItem>
-        <NavItem eventKey="blogger">
-          Đăng Blog
-        </NavItem>
         <NavItem eventKey="logOut">
           Đăng xuất
         </NavItem>

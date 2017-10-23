@@ -43,14 +43,6 @@ export default (
       }}
     />
     <Route
-      path="/blogger"
-      getComponent={(nextState, cb) => {
-        require.ensure([], require => {
-          cb(null, require('./modules/Blogger/pages/Blogger').default);
-        });
-      }}
-    />
-    <Route
       path="/menublog"
       getComponent={(nextState, cb) => {
         require.ensure([], require => {

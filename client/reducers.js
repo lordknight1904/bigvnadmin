@@ -15,7 +15,6 @@ import news from './modules/News/NewsReducer';
 import banner from './modules/Banner/BannerReducer';
 import menuNews from './modules/MenuNews/MenuNewsReducer';
 import menuBlog from './modules/MenuBlog/MenuBlogReducer';
-import blogger from './modules/Blogger/BloggerReducer';
 import blog from './modules/Blog/BlogReducer';
 
 // Combine all reducers into one root reducer
@@ -31,6 +30,5 @@ export default combineReducers({
   banner,
   menuNews,
   menuBlog,
-  blogger,
   blog,
 });
