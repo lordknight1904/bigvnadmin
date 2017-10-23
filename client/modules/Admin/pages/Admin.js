@@ -87,7 +87,7 @@ class Admin extends Component {
     this.setState({ register: false });
   };
   onCreateAdmin = () => {
-    const city = {
+    const admin = {
       userName: this.state.userName,
       password: this.state.password,
       role: this.state.role,

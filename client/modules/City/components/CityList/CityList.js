@@ -6,6 +6,7 @@ import { fetchCities, toggleCity } from '../../CityActions';
 import { getCities, getCurrentPage } from '../../CityReducer';
 import { getId } from '../../../Login/LoginReducer';
 import styles from '../../../../main.css';
+import dateFormat from 'dateformat';
 class CityList extends Component {
   constructor(props) {
     super(props);
@@ -28,20 +29,16 @@ class CityList extends Component {
           <tr>
             <th>Tên Tỉnh/Thành</th>
             <th>Ngày tạo</th>
-            <th className={styles.tableButtonCol}>Thao tác</th>
+            <th className={styles.tableButtonCol}>Khóa</th>
           </tr>
         </thead>
         <tbody>
         {
           this.props.cities.map((city, index) => {
-            const date = new Date(city.dateCreated);
-            const hours = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
-            const minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
-            const time = `${date.getDay()}/${date.getMonth()}/${date.getFullYear()} ${hours}:${minutes}`;
             return (
               <tr key={index}>
                 <td>{city.name}</td>
-                <td>{time}</td>
+                <td>{dateFormat(city.dateCreated, 'dd/mm/yyyy HH:mm')}</td>
                 <td>
                   <Checkbox checked={city.disable} onClick={() => this.onToggle(city._id)} />
                 </td>

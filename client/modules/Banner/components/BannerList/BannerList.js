@@ -7,6 +7,7 @@ import { getBanners, getSearch, getCurrentPage } from '../../BannerReducer';
 import { getId } from '../../../Login/LoginReducer';
 import { setNotify } from '../../../App/AppActions';
 import styles from '../../../../main.css';
+import dateFormat from 'dateformat';
 class BannerList extends Component {
   constructor(props) {
     super(props);
@@ -65,15 +66,11 @@ class BannerList extends Component {
         <tbody>
         {
           this.props.banners.map((a, index) => {
-            const date = new Date(a.dateCreated);
-            const hours = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
-            const minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
-            const time = `${date.getDay()}/${date.getMonth()}/${date.getFullYear()} ${hours}:${minutes}`;
             return (
               <tr key={index}>
                 <td>{a.name}</td>
                 <td>{a.description}</td>
-                <td>{time}</td>
+                <td>{dateFormat(a.dateCreated, 'dd/mm/yyyy HH:mm')}</td>
                 <td>
                   <div style={{ textAlign: 'center' }}>
                     <img role="presentation" width={150} height={150} src={`/banner/${a.imageDirectory}`} />

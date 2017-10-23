@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormControl, Button, Table, Checkbox } from 'react-bootstrap';
+import { Table, Checkbox } from 'react-bootstrap';
 import { fetchMenuBlog, toggleTopic } from '../../MenuBlogActions';
 import { getMenuBlogs, getCurrentPage } from '../../MenuBlogReducer';
 import { getId } from '../../../Login/LoginReducer';
-//import { setNotify } from '../../../App/AppActions';
 import styles from '../../../../main.css';
+import dateFormat from 'dateformat';
 class MenuBlogList extends Component {
   constructor(props) {
     super(props);
@@ -36,15 +36,11 @@ class MenuBlogList extends Component {
         <tbody>
         {
           this.props.menuBlogs.map((menu, index) => {
-            const date = new Date(menu.dateCreated);
-            const hours = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
-            const minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
-            const time = `${date.getDay()}/${date.getMonth()}/${date.getFullYear()} ${hours}:${minutes}`;
             return (
               <tr key={index}>
                 <td>{menu.title}</td>
                 <td>{menu.alias}</td>
-                <td>{time}</td>
+                <td>{dateFormat(menu.dateCreated, 'dd/mm/yyyy HH:mm')}</td>
                 <td>
                   <Checkbox checked={menu.disable} onChange={() => this.onToggle(menu._id)} />
                 </td>

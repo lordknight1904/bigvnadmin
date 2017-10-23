@@ -5,6 +5,7 @@ import { Button, Table, Checkbox, Glyphicon, OverlayTrigger, Tooltip, DropdownBu
 import { fetchNews, toggleNews, vipNews } from '../../NewsActions';
 import { getCurrentPage, getNews, getCategory } from '../../NewsReducer';
 import { getId } from '../../../Login/LoginReducer';
+import dateFormat from 'dateformat';
 // import { setNotify } from '../../../App/AppActions';
 import styles from '../../../../main.css';
 class NewList extends Component {
@@ -57,14 +58,14 @@ class NewList extends Component {
         <tbody>
         {
           this.props.news.map((n, index) => {
-            const date = new Date(n.dateCreated);
-            const hours = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
-            const minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
-            const time = `${date.getDay()}/${date.getMonth()}/${date.getFullYear()} ${hours}:${minutes}`;
+            // const date = new Date(n.dateCreated);
+            // const hours = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
+            // const minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
+            // const time = `${date.getDay()}/${date.getMonth()}/${date.getFullYear()} ${hours}:${minutes}`;
             return (
               <tr key={index}>
                 <td>{n.title}</td>
-                <td>{time}</td>
+                <td>{dateFormat(n.dateCreated, 'dd/mm/yyyy HH:mm')}</td>
                 <td>
                   <Checkbox checked={n.approved} onChange={() => this.onToggle(n._id)} />
                 </td>

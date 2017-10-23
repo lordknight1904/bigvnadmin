@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import CityNavBar from '../components/CityNavBar/CityNavBar';
 import CityList from '../components/CityList/CityList';
 import { getId } from '../../Login/LoginReducer';
-import { Modal, Button, Form, FormGroup, FormControl, Col, Row, ControlLabel, Panel, HelpBlock } from 'react-bootstrap';
+import { Modal, Button, Form, FormGroup, FormControl, Col, Row, ControlLabel } from 'react-bootstrap';
 import { createCity, fetchCities } from '../CityActions';
-import { getSearch, getCurrentPage } from '../CityReducer';
-import { setNotify } from '../../App/AppActions'
+import { getCurrentPage } from '../CityReducer';
+import { setNotify } from '../../App/AppActions';
 
 class City extends Component {
   constructor(props) {
@@ -21,26 +21,13 @@ class City extends Component {
       cityName: '',
       createCity: false,
       creatingCity: false,
-    }
+    };
   }
   componentWillMount() {
     if (this.props.id === '') {
       this.context.router.push('/');
     }
   }
-  showDialog = (type, id) => {
-    this.setState({ show: true, type, idSelected: id });
-  };
-
-  onCreateCity = () => {
-    this.setState({ createCity: true });
-  };
-  hideCreateCity = () => {
-    this.setState({ createCity: false });
-  };
-  handleCityName = (event) => {
-    this.setState({ cityName: event.target.value });
-  };
   onSubmit = () => {
     if (this.state.cityName.trim() === '') {
       this.props.dispatch(setNotify('Tên Tỉnh/Thành không được trống'));
@@ -52,17 +39,29 @@ class City extends Component {
     this.setState({ createCity: true });
     this.props.dispatch(createCity(city)).then(() => {
       this.props.dispatch(fetchCities(this.props.currentPage - 1));
-      this.setState({ creatingCity: false, createCity: false  });
+      this.setState({ creatingCity: false, createCity: false, });
     });
+  };
+  onCreateCity = () => {
+    this.setState({ createCity: true });
+  };
+  hideCreateCity = () => {
+    this.setState({ createCity: false });
+  };
+  handleCityName = (event) => {
+    this.setState({ cityName: event.target.value });
+  };
+  showDialog = (type, id) => {
+    this.setState({ show: true, type, idSelected: id });
   };
   render() {
     return (
       <div>
         <Row>
-          <CityNavBar onCreateCity={this.onCreateCity}/>
+          <CityNavBar onCreateCity={this.onCreateCity} />
         </Row>
         <Row>
-          <CityList showDialog={this.showDialog}/>
+          <CityList showDialog={this.showDialog} />
         </Row>
 
         <Modal
@@ -98,7 +97,6 @@ class City extends Component {
     );
   }
 }
-
 // Retrieve data from store as props
 function mapStateToProps(state) {
   return {
@@ -106,15 +104,12 @@ function mapStateToProps(state) {
     currentPage: getCurrentPage(state),
   };
 }
-
 City.propTypes = {
   dispatch: PropTypes.func.isRequired,
   currentPage: PropTypes.number.isRequired,
   id: PropTypes.string.isRequired,
 };
-
 City.contextTypes = {
   router: PropTypes.object,
 };
-
 export default connect(mapStateToProps)(City);

@@ -7,6 +7,7 @@ import { getMenuNews, getCurrentPage } from '../../MenuNewsReducer';
 import { getId } from '../../../Login/LoginReducer';
 import { setNotify } from '../../../App/AppActions';
 import styles from '../../../../main.css';
+import dateFormat from 'dateformat';
 class MenuNewsList extends Component {
   constructor(props) {
     super(props);
@@ -33,10 +34,6 @@ class MenuNewsList extends Component {
         <tbody>
         {
           this.props.menuNews.map((menu, index) => {
-            const date = new Date(menu.createTime);
-            const hours = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
-            const minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
-            const time = `${date.getDay()}/${date.getMonth()}/${date.getFullYear()} ${hours}:${minutes}`;
             return (
               <tr key={index}>
                 <td>{menu.term_id}</td>
@@ -44,7 +41,7 @@ class MenuNewsList extends Component {
                 <td>{menu.alias}</td>
                 <td>{menu.description}</td>
                 <td>{menu.status}</td>
-                <td>{time}</td>
+                <td>{dateFormat(menu.dateCreated, 'dd/mm/yyyy HH:mm')}</td>
               </tr>
             );
           })

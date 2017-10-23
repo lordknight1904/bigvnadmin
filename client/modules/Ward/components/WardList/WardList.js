@@ -7,6 +7,7 @@ import { getWards, getCurrentPage, getDistrictId } from '../../WardReducer';
 import { getId } from '../../../Login/LoginReducer';
 // import { setNotify } from '../../../App/AppActions';
 import styles from '../../../../main.css';
+import dateFormat from 'dateformat';
 class WardList extends Component {
   constructor(props) {
     super(props);
@@ -33,20 +34,16 @@ class WardList extends Component {
           <tr>
             <th>Tên Quận/Huyện</th>
             <th>Ngày tạo</th>
-            <th className={styles.tableButtonCol}>Thao tác</th>
+            <th className={styles.tableButtonCol}>Khóa</th>
           </tr>
         </thead>
         <tbody>
         {
           this.props.wards.map((ward, index) => {
-            const date = new Date(ward.dateCreated);
-            const hours = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
-            const minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
-            const time = `${date.getDay()}/${date.getMonth()}/${date.getFullYear()} ${hours}:${minutes}`;
             return (
               <tr key={index}>
                 <td>{ward.name}</td>
-                <td>{time}</td>
+                <td>{dateFormat(ward.dateCreated, 'dd/mm/yyyy HH:mm')}</td>
                 <td>
                   <Checkbox checked={ward.disable} onClick={() => this.onToggle(ward._id)} />
                 </td>
