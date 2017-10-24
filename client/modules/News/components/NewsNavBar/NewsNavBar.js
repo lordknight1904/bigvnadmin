@@ -44,11 +44,6 @@ class NewsNavBar extends Component {
             }
           </NavDropdown>
         </Nav>
-        <Nav pullRight>
-          <NavItem>
-            <Button bsStyle="success" onClick={this.props.onCreateCity}>Tạo mới</Button>
-          </NavItem>
-        </Nav>
       </Navbar>
     );
   }

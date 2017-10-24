@@ -16,6 +16,7 @@ import banner from './modules/Banner/BannerReducer';
 import menuNews from './modules/MenuNews/MenuNewsReducer';
 import menuBlog from './modules/MenuBlog/MenuBlogReducer';
 import blog from './modules/Blog/BlogReducer';
+import setting from './modules/Setting/SettingReducer';
 
 // Combine all reducers into one root reducer
 export default combineReducers({
@@ -31,4 +32,5 @@ export default combineReducers({
   menuNews,
   menuBlog,
   blog,
+  setting,
 });

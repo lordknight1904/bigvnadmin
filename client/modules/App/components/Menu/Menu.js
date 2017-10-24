@@ -9,7 +9,7 @@ class Menu extends Component{
   constructor(props){
     super(props);
     this.state = {
-      selected: 'home',
+      selected: 'news',
     };
   }
   handleSelect = (eventKey) => {
@@ -23,9 +23,10 @@ class Menu extends Component{
   render(){
     return (
       <Nav bsStyle="tabs" activeKey={this.state.selected} onSelect={this.handleSelect}>
-        <NavItem eventKey="home">
-          Home
-        </NavItem>
+        <NavDropdown title="Duyệt tin" id="basic-nav-dropdown">
+          <MenuItem eventKey="news">Rao vặt</MenuItem>
+          <MenuItem eventKey="blog">Blog</MenuItem>
+        </NavDropdown>
         <NavItem eventKey="admin">
           Quản trị viên
         </NavItem>
@@ -38,15 +39,14 @@ class Menu extends Component{
           <MenuItem eventKey="ward">Ward</MenuItem>
         </NavDropdown>
         <NavDropdown title="Menu" id="basic-nav-dropdown">
-          <MenuItem eventKey="menunews">Bài viết</MenuItem>
+          <MenuItem eventKey="menunews">Rao vặt</MenuItem>
           <MenuItem eventKey="menublog">Blog</MenuItem>
-        </NavDropdown>
-        <NavDropdown title="Duyệt tin" id="basic-nav-dropdown">
-          <MenuItem eventKey="news">Tin rao</MenuItem>
-          <MenuItem eventKey="blog">Bài viết</MenuItem>
         </NavDropdown>
         <NavItem eventKey="banner">
           Quảng cáo
+        </NavItem>
+        <NavItem eventKey="setting">
+          Cấu hình
         </NavItem>
         <NavItem eventKey="logOut">
           Đăng xuất

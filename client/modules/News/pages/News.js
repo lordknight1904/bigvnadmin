@@ -71,8 +71,10 @@ class News extends Component {
           <Modal.Header>
             <Modal.Title>Preview Tin</Modal.Title>
           </Modal.Header>
-          <Modal.Body style={{ width: '80%' }}>
-            <Preview info={this.state.info}/>
+          <Modal.Body>
+            <div style={{ padding: '20px' }} >
+              <Preview info={this.state.info}/>
+            </div>
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.hideInfo}>Thoát</Button>

@@ -20,6 +20,9 @@ class Banner extends Component {
       link: '',
       imageDirectory: '',
       imagePreview: '',
+
+      isPreview: false,
+      preview: '',
     }
   }
   componentWillMount() {
@@ -78,6 +81,12 @@ class Banner extends Component {
     };
     reader.readAsDataURL(file);
   };
+  setPreview = (preview) => {
+    this.setState({ preview, isPreview: true });
+  };
+  hidePreview = () => {
+    this.setState({ isPreview: false });
+  };
   render() {
     return (
       <div>
@@ -85,7 +94,7 @@ class Banner extends Component {
           <BannerNavBar onCreate={this.onCreate} />
         </Row>
         <Row>
-          <BannerList />
+          <BannerList setPreview={this.setPreview} />
         </Row>
 
         <Modal
@@ -162,6 +171,21 @@ class Banner extends Component {
           <Modal.Footer>
             <Button onClick={this.hideCreate}>Hủy</Button>
             <Button bsStyle="primary" onClick={this.onSubmit}>Tạo</Button>
+          </Modal.Footer>
+        </Modal>
+
+        <Modal
+          show={this.state.isPreview}
+          onHide={this.hidePreview}
+        >
+          <Modal.Header>
+            <Modal.Title>Preview hình</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <img role="presentation" style={{ width: '100%' }} src={`/banner/${this.state.preview}`} />
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.hidePreview}>Thoát</Button>
           </Modal.Footer>
         </Modal>
       </div>

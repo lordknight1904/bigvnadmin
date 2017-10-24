@@ -72,9 +72,10 @@ class BannerList extends Component {
                 <td>{a.description}</td>
                 <td>{dateFormat(a.dateCreated, 'dd/mm/yyyy HH:mm')}</td>
                 <td>
-                  <div style={{ textAlign: 'center' }}>
-                    <img role="presentation" width={150} height={150} src={`/banner/${a.imageDirectory}`} />
-                  </div>
+                  <Button onClick={() => this.props.setPreview(a.imageDirectory)}>Preview Hình</Button>
+                  {/*<div style={{ textAlign: 'center' }}>*/}
+                    {/*<img role="presentation" width={150} height={150} src={`/banner/${a.imageDirectory}`} />*/}
+                  {/*</div>*/}
                 </td>
                 <td>
                   <Button style={{ padding: '0', zIndex: '-1' }}>
@@ -113,6 +114,7 @@ function mapStateToProps(state) {
 
 BannerList.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  setPreview: PropTypes.func.isRequired,
   banners: PropTypes.array.isRequired,
   currentPage: PropTypes.number.isRequired,
   search: PropTypes.string.isRequired,

@@ -49,10 +49,11 @@ class NewList extends Component {
         <thead>
           <tr>
             <th>Tiêu đề</th>
+            <th>Preview</th>
             <th>Ngày tạo</th>
             <th>Đã duyệt</th>
             <th>VIP</th>
-            <th className={styles.tableButtonCol}>Thao tác</th>
+            <th className={styles.tableButtonCol}>Alias</th>
           </tr>
         </thead>
         <tbody>
@@ -65,6 +66,11 @@ class NewList extends Component {
             return (
               <tr key={index}>
                 <td>{n.title}</td>
+                <td>
+                  <OverlayTrigger placement="top" overlay={infoTooltip}>
+                    <Button onClick={() => this.props.onInfo(n)} ><Glyphicon glyph="glyphicon glyphicon-file" /></Button>
+                  </OverlayTrigger>
+                </td>
                 <td>{dateFormat(n.dateCreated, 'dd/mm/yyyy HH:mm')}</td>
                 <td>
                   <Checkbox checked={n.approved} onChange={() => this.onToggle(n._id)} />
@@ -79,9 +85,6 @@ class NewList extends Component {
                 <td>
                   <OverlayTrigger placement="left" overlay={seoTooltip}>
                     <Button onClick={() => this.props.onSEO(n)} ><Glyphicon glyph="glyphicon glyphicon-cog" /></Button>
-                  </OverlayTrigger>
-                  <OverlayTrigger placement="top" overlay={infoTooltip}>
-                    <Button onClick={() => this.props.onInfo(n)} ><Glyphicon glyph="glyphicon glyphicon-file" /></Button>
                   </OverlayTrigger>
                 </td>
               </tr>

@@ -36,7 +36,7 @@ class BlogList extends Component {
           <tr>
             <th>Tiêu đề</th>
             <th>Ngày tạo</th>
-            <th>disable</th>
+            <th>Vô hiệu</th>
             <th>Thao tác</th>
           </tr>
         </thead>

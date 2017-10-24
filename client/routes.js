@@ -27,8 +27,8 @@ if (process.env.NODE_ENV !== 'production') {
   require('./modules/Banner/pages/Banner');
   require('./modules/MenuNews/pages/MenuNews');
   require('./modules/MenuBlog/pages/MenuBlog');
-  require('./modules/Blogger/pages/Blogger');
   require('./modules/Blog/pages/Blog');
+  require('./modules/Setting/pages/Setting');
 }
 
 // react-router setup with code-splitting
@@ -39,6 +39,14 @@ export default (
       getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/Login/pages/Login').default);
+        });
+      }}
+    />
+    <Route
+      path="/setting"
+      getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/Setting/pages/Setting').default);
         });
       }}
     />
@@ -110,7 +118,7 @@ export default (
       path="/home"
       getComponent={(nextState, cb) => {
         require.ensure([], require => {
-          cb(null, require('./modules/Home/pages/Home').default);
+          cb(null, require('./modules/News/pages/News').default);
         });
       }}
     />

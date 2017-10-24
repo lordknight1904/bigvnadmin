@@ -22,7 +22,7 @@ if (process.env.NODE_ENV === 'development') {
 app.use('/photo', Express.static('../bigvn/public'));
 app.use('/images', Express.static('../bigvn/client/images'));
 app.use('/banner', Express.static('./banner'));
-app.use('/blog', Express.static('./blog'));
+app.use('/blog', Express.static('../bigvn/blog'));
 
 // React And Redux Setup
 import { configureStore } from '../client/store';
@@ -46,7 +46,9 @@ import banners from './routes/banner.routes';
 import categories from './routes/category.routes';
 import topics from './routes/topic.routes';
 import blogs from './routes/blog.routes';
+import settings from './routes/setting.routes';
 import serverConfig from './config';
+import dummyData from './dummyData';
 
 // Set native promises as mongoose promise
 mongoose.Promise = global.Promise;
@@ -57,6 +59,7 @@ mongoose.connect(serverConfig.mongoURL, (error) => {
     console.error('Please make sure Mongodb is installed and running!'); // eslint-disable-line no-console
     throw error;
   }
+  dummyData();
 });
 
 app.use(helmet.xssFilter());
@@ -67,7 +70,7 @@ app.use(compression());
 app.use(bodyParser.json({ limit: '20mb' }));
 app.use(bodyParser.urlencoded({ limit: '20mb', extended: false }));
 app.use(Express.static(path.resolve(__dirname, '../dist/client')));
-app.use('/api', [topics, blogs, news, banners, cities, districts, categories, wards, admins, users]);
+app.use('/api', [topics, settings, blogs, news, banners, cities, districts, categories, wards, admins, users]);
 
 // Render Initial HTML
 const renderFullPage = (html, initialState) => {
