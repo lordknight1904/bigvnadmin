@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Table, Checkbox } from 'react-bootstrap';
+import { Table, Checkbox, Button } from 'react-bootstrap';
 import { fetchMenuBlog, toggleTopic } from '../../MenuBlogActions';
 import { getMenuBlogs, getCurrentPage } from '../../MenuBlogReducer';
 import { getId } from '../../../Login/LoginReducer';
@@ -30,7 +30,8 @@ class MenuBlogList extends Component {
             <th>Tiêu đề</th>
             <th>Alias</th>
             <th>Ngày tạo</th>
-            <th className={styles.tableButtonCol}>Thao tác</th>
+            <th>Sửa</th>
+            <th className={styles.tableButtonCol}>Khóa</th>
           </tr>
         </thead>
         <tbody>
@@ -41,6 +42,9 @@ class MenuBlogList extends Component {
                 <td>{menu.title}</td>
                 <td>{menu.alias}</td>
                 <td>{dateFormat(menu.dateCreated, 'dd/mm/yyyy HH:mm')}</td>
+                <td>
+                  <Button onClick={() => this.props.onEdit(menu)}>Sửa</Button>
+                </td>
                 <td>
                   <Checkbox checked={menu.disable} onChange={() => this.onToggle(menu._id)} />
                 </td>
@@ -65,6 +69,7 @@ function mapStateToProps(state) {
 
 MenuBlogList.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  onEdit: PropTypes.func.isRequired,
   menuBlogs: PropTypes.array.isRequired,
   currentPage: PropTypes.number.isRequired,
   id: PropTypes.string.isRequired,

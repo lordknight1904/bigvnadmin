@@ -88,3 +88,21 @@ export function toggleDistrict(req, res) {
     res.json({ district: 'missing' });
   }
 }
+
+export function editDistrict(req, res) {
+  const reqDistrict = req.body.district;
+  if (reqDistrict &&
+    reqDistrict.hasOwnProperty('id') &&
+    reqDistrict.hasOwnProperty('name')
+  ) {
+    District.updateOne({ _id: mongoose.Types.ObjectId(reqDistrict.id) }, { name: reqDistrict.name }).exec((err) => {
+      if (err) {
+        res.json({ district: 'error' });
+      } else {
+        res.json({ district: 'success' });
+      }
+    })
+  } else {
+    res.json({ district: 'missing' });
+  }
+}

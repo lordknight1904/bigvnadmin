@@ -77,9 +77,9 @@ class Login extends Component {
   };
   render() {
     return (
-      <Col xs={4} xsOffset={4} style={{ top: '35%' }}>
+      <Col sm={12} md={4} mdOffset={4} style={{ top: '25vh' }}>
         <div className={`panel panel-default ${styles.loginPanel}`} >
-          <div className={`panel-heading ${styles.headerLogin}`}><h2>Đăng nhập</h2></div>
+          <div className={`panel-heading ${styles.headerLogin}`}><h5>Đăng nhập</h5></div>
           <Form horizontal className="panel-body">
             <FormGroup controlId="formHorizontalEmail">
               <Col componentClass={ControlLabel} sm={4}>
@@ -111,9 +111,9 @@ class Login extends Component {
             </FormGroup>
 
             <FormGroup>
-              <Col smOffset={4} sm={8}>
+              <Col smOffset={4} sm={8} className="text-right">
                 <button disabled={this.state.isSigningIn} onClick={this.onSigningIn} className={styles.inputRegistryButton}>
-                  ĐĂNG NHẬP
+                  Đăng nhập
                 </button>
               </Col>
             </FormGroup>

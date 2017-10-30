@@ -1,4 +1,5 @@
 import City from '../models/city';
+import mongoose from 'mongoose';
 
 export function createCity(req, res) {
   const reqCity =  req.body.city;
@@ -66,6 +67,23 @@ export function toggleCity(req, res) {
         } else {
           res.json({ city: 'none' });
         }
+      }
+    });
+  } else {
+    res.json({ city: 'missing' });
+  }
+}
+export function editCity(req, res) {
+  const reqCity = req.body.city;
+  if (reqCity &&
+      reqCity.hasOwnProperty('id') &&
+      reqCity.hasOwnProperty('name')
+  ) {
+    City.updateOne({ _id: mongoose.Types.ObjectId(reqCity.id) }, { name: reqCity.name }).exec((err) => {
+      if (err) {
+        res.json({ city: 'error' });
+      } else {
+        res.json({ city: 'success' });
       }
     });
   } else {

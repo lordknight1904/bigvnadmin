@@ -1,12 +1,19 @@
 import callApi from '../../util/apiCaller';
 // Export Constants
 export const ACTIONS = {
+  SET_NEWS_SEARCH: 'SET_NEWS_SEARCH',
   SET_CATEGORY: 'SET_CATEGORY',
   SET_CATEGORIES: 'SET_CATEGORIES',
   SET_NEWS_CURRENT_PAGE: 'SET_NEWS_CURRENT_PAGE',
   SET_NEWS: 'SET_NEWS',
 };
 
+export function setSearch(search) {
+  return {
+    type: ACTIONS.SET_NEWS_SEARCH,
+    search
+  };
+}
 export function setCurrentPage(page) {
   return {
     type: ACTIONS.SET_NEWS_CURRENT_PAGE,
@@ -20,9 +27,10 @@ export function setNews(news) {
     news
   };
 }
-export function fetchNews(category, page) {
+export function fetchNews(search, category, page) {
   return (dispatch) => {
-    return callApi(`news?category=${category}&page=${page}`, 'get', '' ).then(res => {
+    return callApi(`news?search=${search}&category=${category}&page=${page}`, 'get', '' ).then(res => {
+      console.log(`news?search=${search}&category=${category}&page=${page}`);
       dispatch(setNews(res.news));
     });
   };

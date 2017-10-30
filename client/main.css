@@ -40,7 +40,7 @@ body {
 }
 
 .table {
-
+  table-layout: fixed;
 }
 .table >thead {
   background-color: #093750;
@@ -57,18 +57,26 @@ body {
 }
 .headerLogin {
   border-bottom: 1px solid #ccc;
-  text-align: center;
+  text-align: left;
 }
 .loginPanel {
   padding: 0px;
   margin:0;
 }
 .inputRegistryButton {
-  text-align: center;
-  width: 100%;
-  background-color: #349708;
-  border: 0;
-  color: #FFF;
+  /*text-align: center;*/
+  /*width: 100%;*/
+  /*background-color: #349708;*/
+  /*border: 0;*/
+  /*color: #FFF;*/
+  /*padding: 7px;*/
+  /*position: relative;*/
   padding: 7px;
-  position: relative;
+}
+.titleOverFlow {
+  overflow:hidden;
+  white-space: nowrap;
+  height:50px;
+  line-height:50px;
+  text-overflow: ellipsis;
 }

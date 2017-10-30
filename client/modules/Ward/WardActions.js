@@ -94,3 +94,11 @@ export function createWard(ward) {
     });
   };
 }
+
+export function editWard(ward) {
+  return () => {
+    return callApi('ward', 'put', '', {ward}).then(res => {
+      return res;
+    });
+  };
+}

@@ -27,10 +27,10 @@ class AdminList extends Component {
       <Table striped bordered condensed hover className={styles.table}>
         <thead>
           <tr>
-            <th>Tên tài khoản</th>
-            <th>Chức vụ</th>
-            <th>Ngày tạo</th>
-            <th className={styles.tableButtonCol}>Thao tác</th>
+            <th style={{ width: '40%'}}>Tên tài khoản</th>
+            <th style={{ width: '20%'}}>Chức vụ</th>
+            <th style={{ width: '20%'}}>Ngày tạo</th>
+            <th style={{ width: '10%'}} className={styles.tableButtonCol}>Thao tác</th>
           </tr>
         </thead>
         <tbody>
@@ -40,7 +40,7 @@ class AdminList extends Component {
               <tr key={index}>
                 <td>{a.userName}</td>
                 <td>{a.role}</td>
-                <td>{dateFormat(a.dateCreated, 'dd/mm/yyyy HH:mm')}</td>
+                <td style={{ textAlign: 'center' }}>{dateFormat(a.dateCreated, 'dd/mm/yyyy HH:mm')}</td>
                 <td>
                   {
                     (a.disabled) ? (

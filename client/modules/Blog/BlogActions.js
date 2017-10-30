@@ -1,12 +1,19 @@
 import callApi from '../../util/apiCaller';
 // Export Constants
 export const ACTIONS = {
+  SET_BLOG_SEARCH: 'SET_BLOG_SEARCH',
   SET_BLOG_TOPIC: 'SET_BLOG_TOPIC',
   SET_BLOG_TOPICS: 'SET_BLOG_TOPICS',
   SET_BLOG_CURRENT_PAGE: 'SET_BLOG_CURRENT_PAGE',
   SET_BLOG_BLOGS: 'SET_BLOG_BLOGS',
 };
 
+export function setSearch(search) {
+  return {
+    type: ACTIONS.SET_BLOG_SEARCH,
+    search
+  };
+}
 export function setCurrentPage(page) {
   return {
     type: ACTIONS.SET_BLOG_CURRENT_PAGE,
@@ -20,9 +27,10 @@ export function setBlogs(blogs) {
     blogs
   };
 }
-export function fetchBlog(topic, page) {
+export function fetchBlog(search, topic, page) {
   return (dispatch) => {
-    return callApi(`blogs?topic=${topic}&page=${page}`, 'get', '' ).then(res => {
+    return callApi(`blogs?topic=${topic}&search=${search}&page=${page}`, 'get', '' ).then(res => {
+      console.log(`blogs?topic=${topic}&search=${search}&page=${page}`);
       dispatch(setBlogs(res.blogs));
     });
   };
@@ -48,9 +56,9 @@ export function fetchTopics() {
   };
 }
 
-export function toggleBlog(blog) {
+export function toggleBlog(news) {
   return () => {
-    return callApi('blog/toggle', 'post', '', {blog} ).then(res => {
+    return callApi('news/toggle', 'post', '', {news} ).then(res => {
       console.log(res);
       return res;
     });

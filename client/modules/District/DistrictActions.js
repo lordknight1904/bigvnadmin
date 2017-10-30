@@ -50,6 +50,7 @@ export function setDistricts(districts) {
 export function fetchDistricts(cityId, page) {
   return (dispatch) => {
     return callApi(`district/${cityId}?page=${page}`, 'get', '' ).then(res => {
+      console.log(res);
       dispatch(setDistricts(res.districts));
     });
   };
@@ -65,6 +66,13 @@ export function toggleDistrict(district) {
 export function createDistrict(district) {
   return () => {
     return callApi('district', 'post', '', {district}).then(res => {
+      return res;
+    });
+  };
+}
+export function editDistrict(district) {
+  return () => {
+    return callApi('district', 'put', '', {district}).then(res => {
       return res;
     });
   };

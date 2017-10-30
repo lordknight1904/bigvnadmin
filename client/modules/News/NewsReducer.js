@@ -2,6 +2,7 @@
 import { ACTIONS } from './NewsActions';
 // Initial State
 const initialState = {
+  search: '',
   news: [],
   categories: [],
   category: 'Chọn danh mục',
@@ -10,6 +11,8 @@ const initialState = {
 
 const NewsReducer = (state = initialState, action) => {
   switch (action.type) {
+    case ACTIONS.SET_NEWS_SEARCH:
+      return { ...state, search: action.search };
     case ACTIONS.SET_NEWS_CURRENT_PAGE:
       return { ...state, currentPage: action.page };
     case ACTIONS.SET_NEWS:
@@ -23,6 +26,7 @@ const NewsReducer = (state = initialState, action) => {
   }
 };
 
+export const getSearch = state => state.news.search;
 export const getCurrentPage = state => state.news.currentPage;
 export const getCategories = state => state.news.categories;
 export const getCategory = state => state.news.category;

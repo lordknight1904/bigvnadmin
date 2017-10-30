@@ -56,11 +56,12 @@ class BannerList extends Component {
       <Table striped bordered condensed hover className={styles.table}>
         <thead>
           <tr>
-            <th>Tên</th>
-            <th>Mô tả</th>
-            <th>Ngày tạo</th>
-            <th>Preview</th>
-            <th className={styles.tableButtonCol}>Thao tác</th>
+            <th style={{ width: '30%' }}>Tên</th>
+            <th style={{ width: '20%' }}>Mô tả</th>
+            <th style={{ width: '20%' }}>Ngày tạo</th>
+            <th style={{ width: '10%' }}>Preview</th>
+            <th style={{ width: '10%' }}>Thao tác</th>
+            <th style={{ width: '10%' }}>Khóa</th>
           </tr>
         </thead>
         <tbody>
@@ -90,6 +91,9 @@ class BannerList extends Component {
                     onChange={(e) => this.onUpdate(a._id, e)}
                     style={{ display: 'none' }}
                   />
+
+                </td>
+                <td style={{ textAlign: 'center' }}>
                   <Checkbox checked={a.disable} onClick={() => this.onToggle(a._id)} />
                 </td>
               </tr>

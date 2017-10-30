@@ -6,18 +6,20 @@ import { fetchBlog, toggleBlog } from '../../BlogActions';
 import { getCurrentPage, getBlogs, getTopic } from '../../BlogReducer';
 import { getId } from '../../../Login/LoginReducer';
 import { setNotify } from '../../../App/AppActions';
+import styles from '../../../../main.css';
+import dateFormat from 'dateformat';
 
 class BlogList extends Component {
   constructor(props) {
     super(props);
   }
   onToggle = (id) => {
-    const blog = {
+    const news = {
       id,
     };
-    this.props.dispatch(toggleBlog(blog)).then(()  => {
+    this.props.dispatch(toggleBlog(news)).then(()  => {
       if (this.props.topic !== 'Chọn danh mục') {
-        this.props.dispatch(fetchBlog(this.props.topic, this.props.currentPage - 1));
+        this.props.dispatch(fetchBlog('', this.props.topic, this.props.currentPage - 1));
       } else {
         this.props.dispatch(fetchBlog('', this.props.currentPage - 1));
       }
@@ -31,35 +33,41 @@ class BlogList extends Component {
       <Tooltip id="tooltip" label='infoTooltip'>Preview tin</Tooltip>
     );
     return (
-      <Table striped bordered condensed hover>
+      <Table striped bordered condensed hover className={styles.table}>
         <thead>
           <tr>
-            <th>Tiêu đề</th>
-            <th>Ngày tạo</th>
-            <th>Vô hiệu</th>
-            <th>Thao tác</th>
+            <th style={{ width: '40%' }}>Tiêu đề</th>
+            <th style={{ width: '15%' }}>Preview</th>
+            <th style={{ width: '20%' }}>Ngày tạo</th>
+            <th style={{ width: '10%' }}>Đã duyệt</th>
+            <th style={{ width: '15%' }}>Alias</th>
           </tr>
         </thead>
         <tbody>
         {
           this.props.blogs.map((n, index) => {
-            const date = new Date(n.dateCreated);
-            const hours =  date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
-            const minutes =  date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
-            const time = `${date.getDay()}/${date.getMonth()}/${date.getFullYear()} ${hours}:${minutes}`;
+            const titleTooltip = (
+              <Tooltip id="tooltip" label="titleTooltip">{n.title}</Tooltip>
+            );
             return (
               <tr key={index}>
-                <td>{n.title}</td>
-                <td>{time}</td>
-                <td>
-                  <Checkbox checked={n.disable} onChange={() => this.onToggle(n._id)} />
-                </td>
-                <td>
-                  <OverlayTrigger placement="left" overlay={seoTooltip}>
-                    <Button onClick={() => this.props.onSEO(n)} ><Glyphicon glyph="glyphicon glyphicon-cog" /></Button>
+                <td style={{ width: '40%' }}  className={styles.titleOverFlow} >
+                  <OverlayTrigger placement="top" overlay={titleTooltip}>
+                    <p style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{n.title}</p>
                   </OverlayTrigger>
+                </td>
+                <td className="text-center">
                   <OverlayTrigger placement="top" overlay={infoTooltip}>
                     <Button onClick={() => this.props.onInfo(n)} ><Glyphicon glyph="glyphicon glyphicon-file" /></Button>
+                  </OverlayTrigger>
+                </td>
+                <td style={{ width: '20%' }}>{dateFormat(n.dateCreated, 'dd/mm/yyyy HH:mm')}</td>
+                <td className="text-center">
+                  <Checkbox checked={n.approved} onChange={() => this.onToggle(n._id)} />
+                </td>
+                <td className="text-center">
+                  <OverlayTrigger placement="left" overlay={seoTooltip}>
+                    <Button onClick={() => this.props.onSEO(n)} ><Glyphicon glyph="glyphicon glyphicon-cog" /></Button>
                   </OverlayTrigger>
                 </td>
               </tr>

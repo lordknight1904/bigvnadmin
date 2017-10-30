@@ -2,6 +2,7 @@
 import { ACTIONS } from './BlogActions';
 // Initial State
 const initialState = {
+  search: '',
   blogs: [],
   topics: [],
   topic: 'Chọn danh mục',
@@ -10,6 +11,8 @@ const initialState = {
 
 const BlogReducer = (state = initialState, action) => {
   switch (action.type) {
+    case ACTIONS.SET_BLOG_SEARCH:
+      return { ...state, search: action.search };
     case ACTIONS.SET_BLOG_CURRENT_PAGE:
       return { ...state, currentPage: action.page };
     case ACTIONS.SET_BLOG_BLOGS:
@@ -23,6 +26,7 @@ const BlogReducer = (state = initialState, action) => {
   }
 };
 
+export const getSearch = state => state.blog.search;
 export const getCurrentPage = state => state.blog.currentPage;
 export const getTopics = state => state.blog.topics;
 export const getTopic = state => state.blog.topic;

@@ -1,7 +1,44 @@
 import Banner from '../models/banner';
 import fs from 'fs';
 import cuid from 'cuid';
+import imagemin from 'imagemin';
+import imageminJpegtran from 'imagemin-jpegtran';
+import imageminPngquant from 'imagemin-pngquant';
 
+
+function writeImage(base64image) {
+  return new Promise(function(resolve, reject) {
+    const ext = base64image.split(';')[0].match(/jpeg|png|gif/)[0];
+    const data = base64image.replace(/^data:image\/\w+;base64,/, '');
+    const buf = new Buffer(data, 'base64');
+    const date = Date.now();
+    const srcImageName = `${date.toString()}_${cuid()}`;
+
+    fs.writeFile(`public/${srcImageName}.${ext}`, buf, (err) => {
+      if (err) {
+        reject('error')
+      } else {
+        imagemin([`public/${srcImageName}.${ext}`], './public', {
+          plugins: [
+            imageminJpegtran(),
+            imageminPngquant({quality: '65-80'})
+          ]
+        }).then(files => {
+          const imageName = `${date.toString()}_${cuid()}`;
+          fs.writeFile(`public/${imageName}.${ext}`, files[0].data, (err2) => {
+            if (err2) {
+              reject('error')
+            } else {
+              fs.unlink(`public/${srcImageName}.${ext}`, (err) => {});
+              resolve(`${imageName}.${ext}`);
+            }
+          });
+          // => [{data: <Buffer 89 50 4e …>, path: 'build/images/foo.jpg'}, …]
+        });
+      }
+    });
+  });
+}
 export function createBanner(req, res) {
   const reqBanner = req.body.banner;
   if (reqBanner &&
@@ -13,24 +50,40 @@ export function createBanner(req, res) {
     const data = reqBanner.base64image.replace(/^data:image\/\w+;base64,/, '');
     const buf = new Buffer(data, 'base64');
     const date = Date.now();
-    const imageName = `${date.toString()}_${cuid()}`;
-    fs.writeFile(`banner/${imageName}.${ext}`, buf, (err) => {
+    const srcImageName = `${date.toString()}_${cuid()}`;
+    fs.writeFile(`banner/${srcImageName}.${ext}`, buf, (err) => {
       if (err) {
         res.json({ banner: 'error' });
       }
       else {
-        const banner = new Banner({
-          name: reqBanner.name,
-          description: reqBanner.description,
-          link: reqBanner.link,
-          imageDirectory: `${imageName}.${ext}`,
-        });
-        banner.save((err) => {
-          if (err) {
-            res.json({ banner: 'error' });
-          } else {
-            res.json({ banner: 'success' });
-          }
+        imagemin([`banner/${srcImageName}.${ext}`], './banner', {
+          plugins: [
+            imageminJpegtran(),
+            imageminPngquant({quality: '65-80'})
+          ]
+        }).then(files => {
+          const imageName = `${date.toString()}_${cuid()}`;
+          fs.writeFile(`banner/${imageName}.${ext}`, files[0].data, (err2) => {
+            if (err2) {
+              console.log('error');
+            } else {
+              const banner = new Banner({
+                name: reqBanner.name,
+                description: reqBanner.description,
+                link: reqBanner.link,
+                imageDirectory: `${imageName}.${ext}`,
+              });
+              banner.save((err) => {
+                if (err) {
+                  res.json({ banner: 'error' });
+                } else {
+                  res.json({ banner: 'success' });
+                }
+              });
+              fs.unlink(`banner/${srcImageName}.${ext}`, (err) => {});
+            }
+          });
+          // => [{data: <Buffer 89 50 4e …>, path: 'build/images/foo.jpg'}, …]
         });
       }
     });

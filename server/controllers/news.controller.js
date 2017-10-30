@@ -6,12 +6,13 @@ import sanitizeHtml from 'sanitize-html';
 import mongoose from 'mongoose';
 
 export function getNews(req, res) {
+  const string = (req.query.search  && req.query.search !== '') ? req.query.search : '.*';
   const page = (req.query.page && req.query.page !== '') ? req.query.page : 0;
   const category = (req.query.category && req.query.category !== '') ?
     mongoose.Types.ObjectId(req.query.category) : '';
   if (category === '') {
     News.find(
-      {  },
+      { type: 'news', title: { $regex: string, $options: 'i' }  },
       {  },
       { skip: 10 * page, limit: 10, sort: { dateCreated: -1 } }
     )
@@ -26,7 +27,7 @@ export function getNews(req, res) {
     });
   } else {
     News.find(
-      { category: category },
+      { category: category, type: 'news', title: { $regex: string, $options: 'i' } },
       {  },
       { skip: 10 * page, limit: 10, sort: { dateCreated: -1 } }
     )
@@ -37,6 +38,48 @@ export function getNews(req, res) {
         res.json({ news: [] });
       } else {
         res.json({ news });
+      }
+    });
+  }
+}
+export function getBlogs(req, res) {
+  const string = (req.query.search  && req.query.search !== '') ? req.query.search : '.*';
+  const page = (req.query.page && req.query.page !== '') ? req.query.page : 0;
+  const topic = (req.query.topic && req.query.topic !== '') ?
+    mongoose.Types.ObjectId(req.query.topic) : '';
+  console.log(topic);
+  if (topic === '') {
+    News.find(
+      { type: 'blog', title: { $regex: string, $options: 'i' }  },
+      {  },
+      { skip: 10 * page, limit: 10, sort: { dateCreated: -1 } }
+    )
+      .populate('category', 'title')
+      .populate('topic', 'title')
+      .populate('city', 'name')
+      .exec((err, blogs) => {
+      if (err) {
+        console.log('here');
+        res.json({ blogs: [] });
+      } else {
+        res.json({ blogs });
+      }
+    });
+  } else {
+    News.find(
+      { topic: topic, type: 'blog', title: { $regex: string, $options: 'i' } },
+      {  },
+      { skip: 10 * page, limit: 10, sort: { dateCreated: -1 } }
+    )
+      .populate('category', 'title')
+      .populate('topic', 'title')
+      .populate('city', 'name')
+      .exec((err, blogs) => {
+      if (err) {
+        console.log('here2');
+        res.json({ blogs: [] });
+      } else {
+        res.json({ blogs });
       }
     });
   }

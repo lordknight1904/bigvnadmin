@@ -58,3 +58,21 @@ export function getWardsAll(req, res) {
 export function none(req, res) {
   res.json({ districts: 'none' });
 }
+
+export function editWard(req, res) {
+  const reqWard = req.body.ward;
+  if (reqWard &&
+    reqWard.hasOwnProperty('id') &&
+    reqWard.hasOwnProperty('name')
+  ) {
+    Ward.updateOne({ _id: mongoose.Types.ObjectId(reqWard.id) }, { name: reqWard.name }).exec((err) => {
+      if (err) {
+        res.json({ ward: 'error' });
+      } else {
+        res.json({ ward: 'success' });
+      }
+    })
+  } else {
+    res.json({ ward: 'missing' });
+  }
+}

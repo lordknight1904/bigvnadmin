@@ -24,7 +24,7 @@ class News extends Component {
     if (this.props.id === '') {
       this.context.router.push('/');
     } else {
-      this.props.dispatch(fetchBlog('', 0));
+      this.props.dispatch(fetchBlog('', '', 0));
       this.props.dispatch(fetchTopics());
     }
   }

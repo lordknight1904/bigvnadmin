@@ -8,6 +8,7 @@ import { getId } from '../../../Login/LoginReducer';
 import { setNotify } from '../../../App/AppActions';
 import styles from '../../../../main.css';
 import dateFormat from 'dateformat';
+
 class MenuNewsList extends Component {
   constructor(props) {
     super(props);
@@ -15,9 +16,6 @@ class MenuNewsList extends Component {
   componentDidMount() {
     this.props.dispatch(fetchMenuNews(this.props.currentPage - 1));
   }
-  onToggle = () => {
-
-  };
   render() {
     return (
       <Table striped bordered condensed hover className={styles.table}>
@@ -28,6 +26,7 @@ class MenuNewsList extends Component {
             <th>alias</th>
             <th>Mô tả</th>
             <th>status</th>
+            <th>Sửa tên danh mục</th>
             <th>Ngày tạo</th>
           </tr>
         </thead>
@@ -41,6 +40,9 @@ class MenuNewsList extends Component {
                 <td>{menu.alias}</td>
                 <td>{menu.description}</td>
                 <td>{menu.status}</td>
+                <td>
+                  <Button onClick={() => this.props.onEdit(menu)}>Sửa</Button>
+                </td>
                 <td>{dateFormat(menu.dateCreated, 'dd/mm/yyyy HH:mm')}</td>
               </tr>
             );
@@ -63,6 +65,7 @@ function mapStateToProps(state) {
 
 MenuNewsList.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  onEdit: PropTypes.func.isRequired,
   menuNews: PropTypes.array.isRequired,
   currentPage: PropTypes.number.isRequired,
   id: PropTypes.string.isRequired,

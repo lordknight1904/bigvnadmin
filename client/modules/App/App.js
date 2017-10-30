@@ -58,7 +58,7 @@ export class App extends Component {
             {
               (this.props.id === '') ? (
                 <div className={styles.container}>
-                  <Col md={12}>
+                  <Col md={12} style={{ height: '90vh' }}>
                     <Login />
                   </Col>
                 </div>

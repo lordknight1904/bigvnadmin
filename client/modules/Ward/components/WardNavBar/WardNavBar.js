@@ -27,6 +27,7 @@ class WardNavBar extends Component {
   };
   chooseDistrict = (district) => {
     this.props.dispatch(setDistrictName(district.name));
+    this.props.dispatch(setDistrictId(district._id));
     this.props.dispatch(fetchWards(district._id));
   };
   render() {

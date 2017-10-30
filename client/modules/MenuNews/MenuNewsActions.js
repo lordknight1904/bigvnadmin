@@ -32,3 +32,11 @@ export function createMenuNews(category) {
     });
   };
 }
+
+export function updateCategory(category) {
+  return () => {
+    return callApi('category', 'put', '', {category}).then(res => {
+      return res;
+    });
+  };
+}

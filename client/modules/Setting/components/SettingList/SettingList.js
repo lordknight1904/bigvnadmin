@@ -27,11 +27,11 @@ class SettingList extends Component {
       <Table striped bordered condensed hover className={styles.table}>
         <thead>
           <tr>
-            <th>Tên</th>
-            <th>Giá trị</th>
-            <th>Ngày tạo</th>
-            <th>Khóa</th>
-            <th>Chỉnh sửa</th>
+            <th style={{ width: '35%' }}>Tên</th>
+            <th style={{ width: '20%' }}>Giá trị</th>
+            <th style={{ width: '10%' }}>Ngày tạo</th>
+            <th style={{ width: '5%' }}>Khóa</th>
+            <th style={{ width: '10%' }}>Chỉnh sửa</th>
           </tr>
         </thead>
         <tbody>
@@ -42,7 +42,7 @@ class SettingList extends Component {
                 <td>{setting.name}</td>
                 <td>{setting.value}</td>
                 <td>{dateFormat(setting.dateCreated, 'dd/mm/yyyy HH:mm')}</td>
-                <td>
+                <td style={{ textAlign: 'center' }}>
                   <Checkbox defaultChecked={setting.disable} onClick={() => this.onToggle(setting._id)} />
                 </td>
                 <td>

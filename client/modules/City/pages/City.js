@@ -5,7 +5,7 @@ import CityNavBar from '../components/CityNavBar/CityNavBar';
 import CityList from '../components/CityList/CityList';
 import { getId } from '../../Login/LoginReducer';
 import { Modal, Button, Form, FormGroup, FormControl, Col, Row, ControlLabel } from 'react-bootstrap';
-import { createCity, fetchCities } from '../CityActions';
+import { createCity, fetchCities, editCity } from '../CityActions';
 import { getCurrentPage } from '../CityReducer';
 import { setNotify } from '../../App/AppActions';
 
@@ -19,8 +19,12 @@ class City extends Component {
       message: '',
 
       cityName: '',
-      createCity: false,
       creatingCity: false,
+
+      editCityId: '',
+      editCityName: '',
+      editingCity: false,
+      isEdit: false,
     };
   }
   componentWillMount() {
@@ -51,8 +55,35 @@ class City extends Component {
   handleCityName = (event) => {
     this.setState({ cityName: event.target.value });
   };
+  handleEditCityName = (event) => {
+    this.setState({ editCityName: event.target.value });
+  };
   showDialog = (type, id) => {
     this.setState({ show: true, type, idSelected: id });
+  };
+  onEdit = (editCity) => {
+    this.setState({ isEdit: true, editCityId: editCity._id, editCityName: editCity.name });
+  };
+  hideEdit = () => {
+    this.setState({ isEdit: false, editCityId: '', editCityName: '' });
+  };
+  onSubmitEdit = () => {
+    if (this.state.editCityId !=='' && this.state.editCityName !== '') {
+      const city = {
+        name: this.state.editCityName,
+        id: this.state.editCityId,
+      };
+      this.setState({ editingCity: true });
+      this.props.dispatch(editCity(city)).then((res) => {
+        if (res.city === 'success') {
+          this.setState({ editingCity: false, editCityName: '', editCityId: '', isEdit: false });
+          this.props.dispatch(fetchCities(this.props.currentPage - 1));
+          this.props.dispatch(setNotify('Sửa tên Tỉnh/Thành thành công'));
+        } else {
+          this.props.dispatch(setNotify('Sửa tên Tỉnh/Thành không thành công'));
+        }
+      });
+    }
   };
   render() {
     return (
@@ -61,7 +92,7 @@ class City extends Component {
           <CityNavBar onCreateCity={this.onCreateCity} />
         </Row>
         <Row>
-          <CityList showDialog={this.showDialog} />
+          <CityList showDialog={this.showDialog} onEdit={this.onEdit} />
         </Row>
 
         <Modal
@@ -91,6 +122,36 @@ class City extends Component {
           <Modal.Footer>
             <Button onClick={this.hideCreateCity} disabled={this.state.creatingCity}>Hủy</Button>
             <Button bsStyle="primary" onClick={this.onSubmit} disabled={this.state.creatingCity}>Tạo</Button>
+          </Modal.Footer>
+        </Modal>
+
+        <Modal
+          show={this.state.isEdit}
+          onHide={this.hideEdit}
+        >
+          <Modal.Header>
+            <Modal.Title>Sửa Tỉnh/Thành</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form horizontal>
+              <FormGroup controlId="formHorizontalEmail">
+                <Col componentClass={ControlLabel} sm={2}>
+                  Tên Tỉnh/Thành
+                </Col>
+                <Col sm={10}>
+                  <FormControl
+                    type="text"
+                    value={this.state.editCityName}
+                    onChange={this.handleEditCityName}
+                  />
+                </Col>
+              </FormGroup>
+
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.hideEdit} disabled={this.state.editingCity}>Hủy</Button>
+            <Button bsStyle="primary" onClick={this.onSubmitEdit} disabled={this.state.editingCity}>Sửa</Button>
           </Modal.Footer>
         </Modal>
       </div>

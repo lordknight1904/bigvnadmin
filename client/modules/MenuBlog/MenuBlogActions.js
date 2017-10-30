@@ -39,3 +39,10 @@ export function toggleTopic(topic) {
     });
   };
 }
+export function updateTopic(topic) {
+  return () => {
+    return callApi('topic', 'put', '', {topic}).then(res => {
+      return res;
+    });
+  };
+}

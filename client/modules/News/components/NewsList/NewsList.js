@@ -18,9 +18,9 @@ class NewList extends Component {
     };
     this.props.dispatch(toggleNews(news)).then(() => {
       if (this.props.category !== 'Chọn danh mục') {
-        this.props.dispatch(fetchNews(this.props.category, this.props.currentPage - 1));
+        this.props.dispatch(fetchNews('', this.props.category, this.props.currentPage - 1));
       } else {
-        this.props.dispatch(fetchNews('', this.props.currentPage - 1));
+        this.props.dispatch(fetchNews('', '', this.props.currentPage - 1));
       }
     });
   };
@@ -31,9 +31,9 @@ class NewList extends Component {
     };
     this.props.dispatch(vipNews(news)).then(() => {
       if (this.props.category !== 'Chọn danh mục') {
-        this.props.dispatch(fetchNews(this.props.category, this.props.currentPage - 1));
+        this.props.dispatch(fetchNews('', this.props.category, this.props.currentPage - 1));
       } else {
-        this.props.dispatch(fetchNews('', this.props.currentPage - 1));
+        this.props.dispatch(fetchNews('', '', this.props.currentPage - 1));
       }
     });
   };
@@ -48,41 +48,44 @@ class NewList extends Component {
       <Table striped bordered condensed hover className={styles.table}>
         <thead>
           <tr>
-            <th>Tiêu đề</th>
-            <th>Preview</th>
-            <th>Ngày tạo</th>
-            <th>Đã duyệt</th>
-            <th>VIP</th>
-            <th className={styles.tableButtonCol}>Alias</th>
+            <th style={{ width: '40%' }}>Tiêu đề</th>
+            <th style={{ width: '10%' }}>Preview</th>
+            <th style={{ width: '20%' }}>Ngày tạo</th>
+            <th style={{ width: '10%' }}>Đã duyệt</th>
+            <th style={{ width: '10%' }}>VIP</th>
+            <th style={{ width: '10%' }} className={styles.tableButtonCol}>Alias</th>
           </tr>
         </thead>
         <tbody>
         {
           this.props.news.map((n, index) => {
-            // const date = new Date(n.dateCreated);
-            // const hours = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
-            // const minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
-            // const time = `${date.getDay()}/${date.getMonth()}/${date.getFullYear()} ${hours}:${minutes}`;
+            const titleTooltip = (
+              <Tooltip id="tooltip" label="titleTooltip">{n.title}</Tooltip>
+            );
             return (
               <tr key={index}>
-                <td>{n.title}</td>
-                <td>
+                <td className={styles.titleOverFlow} style={{ width: '40%' }}>
+                  <OverlayTrigger placement="top" overlay={titleTooltip}>
+                    <p style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{n.title}</p>
+                  </OverlayTrigger>
+                </td>
+                <td style={{ width: '10%' }}>
                   <OverlayTrigger placement="top" overlay={infoTooltip}>
                     <Button onClick={() => this.props.onInfo(n)} ><Glyphicon glyph="glyphicon glyphicon-file" /></Button>
                   </OverlayTrigger>
                 </td>
-                <td>{dateFormat(n.dateCreated, 'dd/mm/yyyy HH:mm')}</td>
-                <td>
+                <td style={{ width: '20%' }}>{dateFormat(n.dateCreated, 'dd/mm/yyyy HH:mm')}</td>
+                <td style={{ width: '10%' }}>
                   <Checkbox checked={n.approved} onChange={() => this.onToggle(n._id)} />
                 </td>
-                <td>
+                <td style={{ width: '10%' }}>
                   <DropdownButton title={n.vip} id="bg-nested-dropdown" disabled={!n.approved}>
                     <MenuItem onClick={() => this.onVip(n._id, 'none')} >None</MenuItem>
                     <MenuItem onClick={() => this.onVip(n._id, 'category')} >Category</MenuItem>
                     <MenuItem onClick={() => this.onVip(n._id, 'all')} >All</MenuItem>
                   </DropdownButton>
                 </td>
-                <td>
+                <td style={{ width: '10%' }}>
                   <OverlayTrigger placement="left" overlay={seoTooltip}>
                     <Button onClick={() => this.props.onSEO(n)} ><Glyphicon glyph="glyphicon glyphicon-cog" /></Button>
                   </OverlayTrigger>

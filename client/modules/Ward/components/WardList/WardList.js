@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Table, Checkbox } from 'react-bootstrap';
+import { Table, Checkbox, Button } from 'react-bootstrap';
 import { fetchWards, toggleWard } from '../../WardActions';
 import { getWards, getCurrentPage, getDistrictId } from '../../WardReducer';
 import { getId } from '../../../Login/LoginReducer';
@@ -32,9 +32,10 @@ class WardList extends Component {
       <Table striped bordered condensed hover className={styles.table}>
         <thead>
           <tr>
-            <th>Tên Quận/Huyện</th>
-            <th>Ngày tạo</th>
-            <th className={styles.tableButtonCol}>Khóa</th>
+            <th style={{ width: '40%' }}>Tên Quận/Huyện</th>
+            <th style={{ width: '20%' }}>Ngày tạo</th>
+            <th style={{ width: '20%' }}>Sửa</th>
+            <th style={{ width: '20%' }} className={styles.tableButtonCol}>Khóa</th>
           </tr>
         </thead>
         <tbody>
@@ -44,6 +45,9 @@ class WardList extends Component {
               <tr key={index}>
                 <td>{ward.name}</td>
                 <td>{dateFormat(ward.dateCreated, 'dd/mm/yyyy HH:mm')}</td>
+                <td>
+                  <Button onClick={() => this.props.onEdit(ward)}>Sửa</Button>
+                </td>
                 <td>
                   <Checkbox checked={ward.disable} onClick={() => this.onToggle(ward._id)} />
                 </td>
@@ -74,6 +78,7 @@ WardList.propTypes = {
   districtId: PropTypes.string.isRequired,
   wards: PropTypes.array,
   showDialog: PropTypes.func.isRequired,
+  onEdit: PropTypes.func.isRequired,
 };
 
 WardList.contextTypes = {

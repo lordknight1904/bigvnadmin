@@ -36,13 +36,13 @@ class UserList extends Component {
       <Table striped bordered condensed hover className={styles.table}>
         <thead>
           <tr>
-            <th>Tên tài khoản</th>
-            <th>Tên người dùng</th>
-            <th>Liên kết Fb</th>
-            <th>Liên kết G+</th>
-            <th>Newser</th>
-            <th>Blogger</th>
-            <th>Ngày tạo</th>
+            <th style={{ width: '30%' }}>Tên tài khoản</th>
+            <th style={{ width: '30%' }}>Tên người dùng</th>
+            <th style={{ width: '8%' }}>Liên kết Fb</th>
+            <th style={{ width: '8%' }}>Liên kết G+</th>
+            <th style={{ width: '7%' }}>Newser</th>
+            <th style={{ width: '7%' }}>Blogger</th>
+            <th style={{ width: '10%' }}>Ngày tạo</th>
           </tr>
         </thead>
         <tbody>
@@ -52,19 +52,19 @@ class UserList extends Component {
               <tr key={index}>
                 <td>{a.userName}</td>
                 <td>{a.fullName}</td>
-                <td>
+                <td style={{ textAlign: 'center' }}>
                   <Checkbox checked={a.facebookId !== ''} readOnly />
                 </td>
-                <td>
+                <td style={{ textAlign: 'center' }}>
                   <Checkbox checked={a.googleId !== ''} readOnly />
                 </td>
-                <td>
+                <td style={{ textAlign: 'center' }}>
                   <Checkbox checked={a.newser} onClick={() => this.onNewser(a._id)} />
                 </td>
-                <td>
+                <td style={{ textAlign: 'center' }}>
                   <Checkbox checked={a.blogger} onClick={() => this.onBlogger(a._id)} />
                 </td>
-                <td>{dateFormat(a.dateCreated, 'dd/mm/yyyy HH:mm')}</td>
+                <td style={{ textAlign: 'center' }}>{dateFormat(a.dateCreated, 'dd/mm/yyyy HH:mm')}</td>
               </tr>
             );
           })

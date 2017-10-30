@@ -46,3 +46,10 @@ export function createCity(city) {
     });
   };
 }
+export function editCity(city) {
+  return () => {
+    return callApi('city', 'put', '', {city}).then(res => {
+      return res;
+    });
+  };
+}

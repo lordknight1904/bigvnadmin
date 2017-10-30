@@ -5,8 +5,8 @@ import WardNavBar from '../components/WardNavBar/WardNavBar';
 import WardList from '../components/WardList/WardList';
 import { getId } from '../../Login/LoginReducer';
 import { Modal, Button, Form, FormGroup, FormControl, Col, Row, ControlLabel, Panel, HelpBlock } from 'react-bootstrap';
-import { createWard, fetchWards, fetchDistricts, fetchDistrictsAll } from '../WardActions';
-import { getCurrentPage, getWardCities } from '../WardReducer';
+import { createWard, fetchWards, fetchDistricts, fetchDistrictsAll, editWard } from '../WardActions';
+import { getCurrentPage, getWardCities, getDistrictId } from '../WardReducer';
 import { setNotify } from '../../App/AppActions';
 
 class Ward extends Component {
@@ -24,6 +24,11 @@ class Ward extends Component {
       createWard: false,
       creatingWard: false,
       districts: [],
+
+      editWardId: '',
+      editWardName: '',
+      editingWard: false,
+      isEdit: false,
     }
   }
   componentWillMount() {
@@ -76,6 +81,34 @@ class Ward extends Component {
       });
     }
   };
+
+  handleEditWardName = (event) => {
+    this.setState({ editWardName: event.target.value });
+  };
+  onEdit = (editWard) => {
+    this.setState({ isEdit: true, editWardId: editWard._id, editWardName: editWard.name });
+  };
+  hideEdit = () => {
+    this.setState({ isEdit: false, editWardId: '', editWardName: '' });
+  };
+  onSubmitEdit = () => {
+    if (this.state.editWardId !=='' && this.state.editWardName !== '') {
+      const ward = {
+        name: this.state.editWardName,
+        id: this.state.editWardId,
+      };
+      this.setState({ editingWard: true });
+      this.props.dispatch(editWard(ward)).then((res) => {
+        if (res.ward === 'success') {
+          this.setState({ editingWard: false, editWardName: '', editWardId: '', isEdit: false });
+          this.props.dispatch(fetchWards(this.props.districtId, this.props.currentPage - 1));
+          this.props.dispatch(setNotify('Sửa tên Quận/Huyện thành công'));
+        } else {
+          this.props.dispatch(setNotify('Sửa tên Quận/Huyện không thành công'));
+        }
+      });
+    }
+  };
   render() {
     return (
       <div>
@@ -83,7 +116,7 @@ class Ward extends Component {
           <WardNavBar onCreateWard={this.onCreateWard}/>
         </Row>
         <Row>
-          <WardList showDialog={this.showDialog}/>
+          <WardList showDialog={this.showDialog} onEdit={this.onEdit} />
         </Row>
 
         <Modal
@@ -149,6 +182,36 @@ class Ward extends Component {
             <Button bsStyle="primary" onClick={this.onSubmit} disabled={this.state.creatingWard}>Tạo</Button>
           </Modal.Footer>
         </Modal>
+
+        <Modal
+          show={this.state.isEdit}
+          onHide={this.hideEdit}
+        >
+          <Modal.Header>
+            <Modal.Title>Sửa Quận/Huyện</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form horizontal>
+              <FormGroup controlId="formHorizontalEmail">
+                <Col componentClass={ControlLabel} sm={2}>
+                  Tên Phường/Xã
+                </Col>
+                <Col sm={10}>
+                  <FormControl
+                    type="text"
+                    value={this.state.editWardName}
+                    onChange={this.handleEditWardName}
+                  />
+                </Col>
+              </FormGroup>
+
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.hideEdit} disabled={this.state.editingWard}>Hủy</Button>
+            <Button bsStyle="primary" onClick={this.onSubmitEdit} disabled={this.state.editingWard}>Sửa</Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     );
   }
@@ -160,6 +223,7 @@ function mapStateToProps(state) {
     id: getId(state),
     currentPage: getCurrentPage(state),
     cities: getWardCities(state),
+    districtId: getDistrictId(state),
   };
 }
 
@@ -168,6 +232,7 @@ Ward.propTypes = {
   currentPage: PropTypes.number.isRequired,
   cities: PropTypes.array.isRequired,
   id: PropTypes.string.isRequired,
+  districtId: PropTypes.string.isRequired,
 };
 
 Ward.contextTypes = {

@@ -1,5 +1,6 @@
 import Topic from '../models/topic';
 import KhongDau from 'khong-dau';
+import mongoose from 'mongoose';
 
 export function getTopics(req, res) {
   Topic.find({}).exec((err, topics) => {
@@ -15,9 +16,9 @@ export function createTopic(req, res) {
   if (reqTopic &&
     reqTopic.hasOwnProperty('title')
   ) {
-    const alias = KhongDau(reqTopic.title).trim().replace(/ /g, "-");
+    const alias = KhongDau(reqTopic.title).trim().toLowerCase().replace(/ /g, "-");
     const topic = new Topic({
-      title: reqTopic.title,
+      title: reqTopic.title.toUpperCase(),
       alias,
     });
     topic.save((err2) => {
@@ -55,6 +56,23 @@ export function toggleTopic(req, res) {
         } else {
           res.json({ topic: 'none' });
         }
+      }
+    });
+  } else {
+    res.json({ topic: 'missing' });
+  }
+}
+export function updateTopic(req, res) {
+  const reqTopic =  req.body.topic;
+  if (reqTopic &&
+    reqTopic.hasOwnProperty('title')
+  ) {
+    const alias = KhongDau(reqTopic.title).trim().toLowerCase().replace(/ /g, "-");
+    Topic.updateOne({ _id: mongoose.Types.ObjectId(reqTopic.id) }, { title: reqTopic.title.toUpperCase(), alias }).exec((err) => {
+      if (err) {
+        res.json({ topic: 'error' });
+      } else {
+        res.json({ topic: 'success' });
       }
     });
   } else {

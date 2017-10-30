@@ -10,6 +10,9 @@ const initialState = {
   cityId: '',
   districtId: '',
   wardId: '',
+
+  searchCategory: '',
+  searchString: ''
 };
 
 const AppReducer = (state = initialState, action) => {

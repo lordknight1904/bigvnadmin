@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Table, Checkbox } from 'react-bootstrap';
+import { Table, Checkbox, Button } from 'react-bootstrap';
 import { fetchCities, toggleCity } from '../../CityActions';
 import { getCities, getCurrentPage } from '../../CityReducer';
 import { getId } from '../../../Login/LoginReducer';
@@ -29,6 +29,7 @@ class CityList extends Component {
           <tr>
             <th>Tên Tỉnh/Thành</th>
             <th>Ngày tạo</th>
+            <th>Sửa</th>
             <th className={styles.tableButtonCol}>Khóa</th>
           </tr>
         </thead>
@@ -40,6 +41,9 @@ class CityList extends Component {
                 <td>{city.name}</td>
                 <td>{dateFormat(city.dateCreated, 'dd/mm/yyyy HH:mm')}</td>
                 <td>
+                  <Button onClick={() => this.props.onEdit(city)}>Sửa</Button>
+                </td>
+                <td className="text-center">
                   <Checkbox checked={city.disable} onClick={() => this.onToggle(city._id)} />
                 </td>
               </tr>
@@ -68,6 +72,7 @@ CityList.propTypes = {
   id: PropTypes.string.isRequired,
 
   showDialog: PropTypes.func.isRequired,
+  onEdit: PropTypes.func.isRequired,
 };
 
 CityList.contextTypes = {
