@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Navbar, Nav, NavItem, MenuItem, Pagination, FormControl, Button } from 'react-bootstrap';
-import styles from './AdminNavBar.css';
+import styles from '../../../../main.css';
 import { setSearch, setMaxPage, setCurrentPage, getAdminSearch } from '../../AdminActions';
 import { getCurrentPage, getMaxPage, getSearch, getAdmin } from '../../AdminReducer';
 
@@ -25,7 +25,7 @@ class AdminNavBar extends Component {
     return (
       <Navbar className={styles.cointain}>
         <Nav>
-          <NavItem>
+          <NavItem className={styles.navPageItem}>
             <FormControl
               type="text"
               placeholder="Tìm kiếm theo tên"
@@ -33,24 +33,25 @@ class AdminNavBar extends Component {
               onChange={this.hanldeSearch}
             />
           </NavItem>
-          <NavItem componentClass="span">
+          <NavItem componentClass="span" className={styles.navPageItem}>
             <Pagination
               bsSize="small"
               first
               last
               boundaryLinks
               activePage={this.props.currentPage}
-              items={ (this.props.admin.length === 0) ? 1 : Math.ceil(this.props.admin.length / 10)}
+              items={(this.props.admin.length === 0) ? 1 : Math.ceil(this.props.admin.length / 10)}
               maxButtons={5}
               onSelect={this.hanldePage}
+              bsClass={`pagination pagination-sm ${styles.pageInfo}`}
             />
           </NavItem>
-          <NavItem>
+          <NavItem className={styles.navPageItem}>
             <Button bsStyle="success" onClick={this.search}>Tìm kiếm</Button>
           </NavItem>
         </Nav>
         <Nav pullRight>
-          <NavItem>
+          <NavItem className={styles.navPageItem}>
             <Button bsStyle="success" onClick={this.props.onRegister}>Tạo mới</Button>
           </NavItem>
         </Nav>

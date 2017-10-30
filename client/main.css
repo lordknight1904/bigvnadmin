@@ -80,3 +80,27 @@ body {
   line-height:50px;
   text-overflow: ellipsis;
 }
+
+
+.cointain >div {
+  width: 100% !important;
+  padding-top: 10px;
+  padding-bottom: 7px;
+}
+.cointain>ul>li>a {
+  padding: 0 !important;
+  display: block;
+}
+.navPageItem {
+  padding-right: 5px;
+}
+.navPageItem>a{
+  padding: 0 !important;
+  display: block;
+}
+.pageInfo {
+  margin:0px;
+}
+.pageInfo>li>a {
+  height: 34px;
+}

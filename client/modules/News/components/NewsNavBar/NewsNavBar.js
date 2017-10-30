@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Navbar, Nav, NavItem, MenuItem, Pagination, FormControl, Button, NavDropdown } from 'react-bootstrap';
-import styles from './NewsNavBar.css';
+import { Navbar, Nav, NavItem, MenuItem, Pagination, FormControl, Button, NavDropdown, DropdownButton } from 'react-bootstrap';
 import { fetchNews, setCurrentPage, setCategory, setSearch } from '../../NewsActions';
 import { getCurrentPage, getCategory, getCategories, getNews, getSearch } from '../../NewsReducer';
-
+import styles from '../../../../main.css';
 class NewsNavBar extends Component {
   constructor(props) {
     super(props);
@@ -26,7 +25,7 @@ class NewsNavBar extends Component {
     return (
       <Navbar className={styles.cointain}>
         <Nav>
-          <NavItem>
+          <NavItem className={styles.navPageItem}>
             <FormControl
               type="text"
               placeholder="Tìm kiếm theo tên"
@@ -34,27 +33,28 @@ class NewsNavBar extends Component {
               onChange={this.hanldeSearch}
             />
           </NavItem>
-          <NavItem componentClass="span">
+          <NavItem componentClass="span" className={styles.navPageItem}>
             <Pagination
               bsSize="small"
               first
               last
               boundaryLinks
               activePage={this.props.currentPage}
-              items={ (this.props.news.length === 0) ? 1 : Math.ceil(this.props.news.length / 10)}
+              items={(this.props.news.length === 0) ? 1 : Math.ceil(this.props.news.length / 10)}
               maxButtons={5}
               onSelect={this.hanldePage}
+              bsClass={`pagination pagination-sm ${styles.pageInfo}`}
             />
           </NavItem>
         </Nav>
         <Nav>
-          <NavDropdown title={this.props.category} id="basic-nav-dropdown">
+          <DropdownButton title={this.props.category} id="basic-nav-dropdown" className={styles.navPageItem}>
             {
               this.props.categories.map((cate, index) => (
                 <MenuItem key={index} onClick={() => this.chooseCate(cate)}>{cate.title}</MenuItem>
               ))
             }
-          </NavDropdown>
+          </DropdownButton>
         </Nav>
       </Navbar>
     );

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Navbar, Nav, NavItem, MenuItem, Pagination, FormControl, Button, NavDropdown } from 'react-bootstrap';
-import styles from './DistrictNavBar.css';
+import { Navbar, Nav, NavItem, MenuItem, Pagination, FormControl, Button, NavDropdown, DropdownButton } from 'react-bootstrap';
+import styles from '../../../../main.css';
 import { setCurrentPage, fetchDistricts, setCityId, setCityName } from '../../DistrictActions';
 import { getCurrentPage, getDistricts, getCities, getCityName } from '../../DistrictReducer';
 
@@ -27,7 +27,7 @@ class DistrictNavBar extends Component {
     return (
       <Navbar className={styles.cointain}>
         <Nav>
-          <NavItem componentClass="span">
+          <NavItem componentClass="span" className={styles.navPageItem}>
             <Pagination
               bsSize="small"
               first
@@ -37,17 +37,18 @@ class DistrictNavBar extends Component {
               items={ (this.props.districts.length === 0) ? 1 : Math.ceil(this.props.districts.length / 10)}
               maxButtons={5}
               onSelect={this.hanldePage}
+              bsClass={`pagination pagination-sm ${styles.pageInfo}`}
             />
           </NavItem>
         </Nav>
         <Nav>
-          <NavDropdown title={this.props.cityName} id="basic-nav-dropdown">
+          <DropdownButton title={this.props.cityName} id="basic-nav-dropdown" className={styles.navPageItem}>
             {
               this.props.cities.map((city, index) => (
                 <MenuItem key={index} onClick={() => this.chooseCity(city)}>{city.name}</MenuItem>
               ))
             }
-          </NavDropdown>
+          </DropdownButton>
         </Nav>
         <Nav pullRight>
           <NavItem>

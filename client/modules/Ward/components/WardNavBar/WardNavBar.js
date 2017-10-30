@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Navbar, Nav, NavItem, MenuItem, Pagination, FormControl, Button, NavDropdown } from 'react-bootstrap';
-import styles from './WardNavBar.css';
+import { Navbar, Nav, NavItem, MenuItem, Pagination, FormControl, Button, NavDropdown, DropdownButton } from 'react-bootstrap';
+import styles from '../../../../main.css';
 import { setCurrentPage, fetchWards, setDistrictId, fetchDistricts, setCityName, setDistrictName, setWards } from '../../WardActions';
 import { getCurrentPage, getWards, getDistrictName, getCityName, getWardDistricts } from '../../WardReducer';
 import { getCities } from '../../../City/CityReducer';
@@ -34,36 +34,37 @@ class WardNavBar extends Component {
     return (
       <Navbar className={styles.cointain}>
         <Nav>
-          <NavItem componentClass="span">
+          <NavItem componentClass="span" className={styles.navPageItem}>
             <Pagination
               bsSize="small"
               first
               last
               boundaryLinks
               activePage={this.props.currentPage}
-              items={ (this.props.districts.length === 0) ? 1 : Math.ceil(this.props.districts.length / 10)}
+              items={(this.props.districts.length === 0) ? 1 : Math.ceil(this.props.districts.length / 10)}
               maxButtons={5}
+              bsClass={`pagination pagination-sm ${styles.pageInfo}`}
               onSelect={this.hanldePage}
             />
           </NavItem>
         </Nav>
         <Nav>
-          <NavDropdown title={this.props.cityName} id="basic-nav-dropdown">
+          <DropdownButton title={this.props.cityName} id="basic-nav-dropdown" className={styles.navPageItem}>
             {
               this.props.cities.map((city, index) => (
                 <MenuItem key={index} onClick={() => this.chooseCity(city)}>{city.name}</MenuItem>
               ))
             }
-          </NavDropdown>
+          </DropdownButton>
         </Nav>
         <Nav>
-          <NavDropdown title={this.props.districtName} id="basic-nav-dropdown">
+          <DropdownButton title={this.props.districtName} id="basic-nav-dropdown" className={styles.navPageItem}>
             {
               this.props.districts.map((district, index) => (
                 <MenuItem key={index} onClick={() => this.chooseDistrict(district)}>{district.name}</MenuItem>
               ))
             }
-          </NavDropdown>
+          </DropdownButton>
         </Nav>
         <Nav pullRight>
           <NavItem>

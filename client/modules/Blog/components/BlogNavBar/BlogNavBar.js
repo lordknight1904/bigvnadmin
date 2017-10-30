@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Navbar, Nav, NavItem, MenuItem, Pagination, FormControl, Button, NavDropdown } from 'react-bootstrap';
-import styles from './BlogNavBar.css';
+import { Navbar, Nav, NavItem, MenuItem, Pagination, FormControl, Button, NavDropdown, DropdownButton } from 'react-bootstrap';
+import styles from '../../../../main.css';
 import { fetchBlog, setCurrentPage, setTopic, setSearch } from '../../BlogActions';
 import { getCurrentPage, getTopic, getTopics, getBlogs, getSearch } from '../../BlogReducer';
 
@@ -24,9 +24,9 @@ class BlogNavBar extends Component {
   };
   render() {
     return (
-      <Navbar className={styles.cointain}>
+      <Navbar className={styles.cointain} >
         <Nav>
-          <NavItem>
+          <NavItem className={styles.navPageItem}>
             <FormControl
               type="text"
               placeholder="Tìm kiếm theo tên"
@@ -34,27 +34,28 @@ class BlogNavBar extends Component {
               onChange={this.hanldeSearch}
             />
           </NavItem>
-          <NavItem componentClass="span">
+          <NavItem componentClass="span" className={styles.navPageItem}>
             <Pagination
               bsSize="small"
               first
               last
               boundaryLinks
               activePage={this.props.currentPage}
-              items={ (this.props.blogs.length === 0) ? 1 : Math.ceil(this.props.blogs.length / 10)}
+              items={(this.props.blogs.length === 0) ? 1 : Math.ceil(this.props.blogs.length / 10)}
               maxButtons={5}
               onSelect={this.hanldePage}
+              bsClass={`pagination pagination-sm ${styles.pageInfo}`}
             />
           </NavItem>
         </Nav>
         <Nav>
-          <NavDropdown title={this.props.topic} id="basic-nav-dropdown">
+          <DropdownButton title={this.props.topic} id="basic-nav-dropdown" className={styles.navPageItem}>
             {
               this.props.topics.map((topic, index) => (
                 <MenuItem key={index} onClick={() => this.chooseTopic(topic)}>{topic.title}</MenuItem>
               ))
             }
-          </NavDropdown>
+          </DropdownButton>
         </Nav>
       </Navbar>
     );

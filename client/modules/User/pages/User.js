@@ -42,10 +42,10 @@ class User extends Component {
     return (
       <div>
         <Row>
-          <UserNavBar onRegister={this.onRegister}/>
+          <UserNavBar onRegister={this.onRegister} />
         </Row>
         <Row>
-          <UserList showDialog={this.showDialog}/>
+          <UserList showDialog={this.showDialog} />
         </Row>
       </div>
     );

@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Navbar, Nav, NavItem, MenuItem, Pagination, FormControl, Button } from 'react-bootstrap';
-import styles from './MenuBlogNavBar.css';
-import { fetchMenuBlog } from '../../MenuBlogActions';
+import { fetchMenuBlog, setCurrentPage } from '../../MenuBlogActions';
 import { getCurrentPage, getMenuBlogs } from '../../MenuBlogReducer';
-
+import styles from '../../../../main.css';
 class MenuBlogNavBar extends Component {
   constructor(props) {
     super(props);
@@ -21,24 +20,25 @@ class MenuBlogNavBar extends Component {
     return (
       <Navbar className={styles.cointain}>
         <Nav>
-          <NavItem componentClass="span">
+          <NavItem componentClass="span" className={styles.navPageItem}>
             <Pagination
               bsSize="small"
               first
               last
               boundaryLinks
               activePage={this.props.currentPage}
-              items={ (this.props.menuBlogs.length === 0) ? 1 : Math.ceil(this.props.menuBlogs.length / 10)}
+              items={(this.props.menuBlogs.length === 0) ? 1 : Math.ceil(this.props.menuBlogs.length / 10)}
               maxButtons={5}
               onSelect={this.hanldePage}
+              bsClass={`pagination pagination-sm ${styles.pageInfo}`}
             />
           </NavItem>
-          <NavItem>
+          <NavItem className={styles.navPageItem}>
             <Button bsStyle="success" onClick={this.search}>Tìm kiếm</Button>
           </NavItem>
         </Nav>
         <Nav pullRight>
-          <NavItem>
+          <NavItem className={styles.navPageItem}>
             <Button bsStyle="success" onClick={this.props.onCreateMenuBlog}>Tạo mới</Button>
           </NavItem>
         </Nav>
