@@ -30,7 +30,6 @@ export function setNews(news) {
 export function fetchNews(search, category, page) {
   return (dispatch) => {
     return callApi(`news?search=${search}&category=${category}&page=${page}`, 'get', '' ).then(res => {
-      console.log(`news?search=${search}&category=${category}&page=${page}`);
       dispatch(setNews(res.news));
     });
   };

@@ -47,7 +47,6 @@ export function getBlogs(req, res) {
   const page = (req.query.page && req.query.page !== '') ? req.query.page : 0;
   const topic = (req.query.topic && req.query.topic !== '') ?
     mongoose.Types.ObjectId(req.query.topic) : '';
-  console.log(topic);
   if (topic === '') {
     News.find(
       { type: 'blog', title: { $regex: string, $options: 'i' }  },
@@ -59,7 +58,6 @@ export function getBlogs(req, res) {
       .populate('city', 'name')
       .exec((err, blogs) => {
       if (err) {
-        console.log('here');
         res.json({ blogs: [] });
       } else {
         res.json({ blogs });
@@ -76,7 +74,6 @@ export function getBlogs(req, res) {
       .populate('city', 'name')
       .exec((err, blogs) => {
       if (err) {
-        console.log('here2');
         res.json({ blogs: [] });
       } else {
         res.json({ blogs });

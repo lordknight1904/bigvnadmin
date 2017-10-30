@@ -14,8 +14,13 @@ class NewsNavBar extends Component {
     this.props.dispatch(fetchNews(this.props.search, this.props.category !== 'Chọn danh mục' ? this.props.category : '', eventKey - 1));
   };
   chooseCate = (cate) => {
-    this.props.dispatch(setCategory(cate.title));
-    this.props.dispatch(fetchNews(this.props.search, cate._id, 0));
+    if (cate === '') {
+      this.props.dispatch(setCategory('Tất cả'));
+      this.props.dispatch(fetchNews(this.props.search, '', 0));
+    } else {
+      this.props.dispatch(setCategory(cate.title));
+      this.props.dispatch(fetchNews(this.props.search, cate._id, 0));
+    }
   };
   hanldeSearch = (event) => {
     this.props.dispatch(setSearch(event.target.value));
@@ -49,6 +54,7 @@ class NewsNavBar extends Component {
         </Nav>
         <Nav>
           <DropdownButton title={this.props.category} id="basic-nav-dropdown" className={styles.navPageItem}>
+            <MenuItem onClick={() => this.chooseCate('')}>Tất cả</MenuItem>
             {
               this.props.categories.map((cate, index) => (
                 <MenuItem key={index} onClick={() => this.chooseCate(cate)}>{cate.title}</MenuItem>

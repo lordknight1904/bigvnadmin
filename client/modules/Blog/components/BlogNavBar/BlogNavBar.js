@@ -15,8 +15,13 @@ class BlogNavBar extends Component {
     this.props.dispatch(fetchBlog(this.props.search, this.props.topic, eventKey - 1));
   };
   chooseTopic = (topic) => {
-    this.props.dispatch(setTopic(topic.title));
-    this.props.dispatch(fetchBlog(this.props.search, topic._id, 0));
+    if (topic === '') {
+      this.props.dispatch(setTopic('Tất cả'));
+      this.props.dispatch(fetchBlog(this.props.search, '', 0));
+    } else {
+      this.props.dispatch(setTopic(topic.title));
+      this.props.dispatch(fetchBlog(this.props.search, topic._id, 0));
+    }
   };
   hanldeSearch = (event) => {
     this.props.dispatch(setSearch(event.target.value));
@@ -50,6 +55,7 @@ class BlogNavBar extends Component {
         </Nav>
         <Nav>
           <DropdownButton title={this.props.topic} id="basic-nav-dropdown" className={styles.navPageItem}>
+            <MenuItem onClick={() => this.chooseTopic('')}>Tất cả</MenuItem>
             {
               this.props.topics.map((topic, index) => (
                 <MenuItem key={index} onClick={() => this.chooseTopic(topic)}>{topic.title}</MenuItem>
