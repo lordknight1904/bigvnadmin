@@ -83,7 +83,7 @@ class MenuBlog extends Component {
         <Row>
           <MenuBlogNavBar onCreateMenuBlog={this.onCreateMenuBlog}/>
         </Row>
-        <Row>
+        <Row style={{ paddingLeft: '20px', paddingRight: '20px' }}>
           <MenuBlogList onEdit={this.onEdit}/>
         </Row>
 

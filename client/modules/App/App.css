@@ -3,3 +3,38 @@
   padding: 15px;
   margin: 0 auto;
 }
+.customLogin {
+  background-color: #edf4f5;
+  padding-bottom: 100% !important
+}
+.sideMenu {
+
+}
+.sideMenu > li > a {
+  color: #666;
+  border-top: 1px solid #37414b;
+  border-bottom: 1px solid #1f262d;
+}
+.sideMenu > li > a:hover {
+  color: white;
+  background-color: #27a9e3;
+}
+.sideMenu > li > a.active {
+  color: black;
+  background-color: #27a9e3;
+}
+.subMenu > a {
+  padding-left: 30px !important;
+  color: #666;
+  background-color: #1E242B;
+}
+.subMenu > a:hover {
+  padding-left: 30px !important;
+  color: white !important;
+  background-color: limegreen !important;
+}
+.subMenu > a:active {
+  padding-left: 30px !important;
+  color: white !important;
+  background-color: limegreen !important;
+}

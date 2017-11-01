@@ -44,7 +44,7 @@ class User extends Component {
         <Row>
           <UserNavBar onRegister={this.onRegister} />
         </Row>
-        <Row>
+        <Row style={{ paddingLeft: '20px', paddingRight: '20px' }}>
           <UserList showDialog={this.showDialog} />
         </Row>
       </div>

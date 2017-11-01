@@ -46,7 +46,7 @@ class News extends Component {
         <Row>
           <BlogNavBar/>
         </Row>
-        <Row>
+        <Row style={{ paddingLeft: '20px', paddingRight: '20px' }}>
           <BlogList onSEO={this.onSEO} onInfo={this.onInfo} />
         </Row>
 

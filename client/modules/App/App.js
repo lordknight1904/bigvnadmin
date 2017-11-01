@@ -57,17 +57,22 @@ export class App extends Component {
             />
             {
               (this.props.id === '') ? (
-                <div className={styles.container}>
-                  <Col md={12} style={{ height: '90vh' }}>
+                <div className={`${styles.container} ${styles.customLogin}`}>
+                  <Col md={12} >
                     <Login />
                   </Col>
                 </div>
               ) : (
-                <div className={styles.container}>
-                  <Col md={12}>
+                <div className={styles.container} style={{ padding: '0' }}>
+                  <Col md={2} style={{ paddingLeft: '0', paddingRight: '0', height: '100vh', backgroundColor: '#2E363F' }} >
+                    <div id="header" style={{ marginTop: '0px', paddingLeft: '20px', zIndex: '0', height: '50px' }}>
+                      <div>
+                        <img src="/banner/logo2.png" />
+                      </div>
+                    </div>
                     <Menu />
                   </Col>
-                  <Col md={12}>
+                  <Col md={10}>
                     {this.props.children}
                   </Col>
                 </div>

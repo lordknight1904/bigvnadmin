@@ -21,7 +21,7 @@ class BlogList extends Component {
       if (this.props.topic !== 'Chọn danh mục') {
         this.props.dispatch(fetchBlog('', this.props.topic, this.props.currentPage - 1));
       } else {
-        this.props.dispatch(fetchBlog('', this.props.currentPage - 1));
+        this.props.dispatch(fetchBlog('', '', this.props.currentPage - 1));
       }
     });
   };

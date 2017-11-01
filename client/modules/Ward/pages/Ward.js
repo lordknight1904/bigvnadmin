@@ -115,7 +115,7 @@ class Ward extends Component {
         <Row>
           <WardNavBar onCreateWard={this.onCreateWard}/>
         </Row>
-        <Row>
+        <Row style={{ paddingLeft: '20px', paddingRight: '20px' }}>
           <WardList showDialog={this.showDialog} onEdit={this.onEdit} />
         </Row>
 

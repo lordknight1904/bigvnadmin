@@ -46,7 +46,7 @@ class News extends Component {
         <Row>
           <NewsNavBar/>
         </Row>
-        <Row>
+        <Row style={{ paddingLeft: '20px', paddingRight: '20px' }}>
           <NewsList onSEO={this.onSEO} onInfo={this.onInfo} />
         </Row>
 

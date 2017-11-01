@@ -23,6 +23,10 @@ app.use('/photo', Express.static('../bigvn/public'));
 app.use('/images', Express.static('../bigvn/client/images'));
 app.use('/banner', Express.static('./banner'));
 app.use('/blog', Express.static('../bigvn/blog'));
+app.use('/css', Express.static('./css'));
+app.use('/js', Express.static('./js'));
+app.use('/font-awesome', Express.static('./font-awesome'));
+app.use('/img', Express.static('./img'));
 
 // React And Redux Setup
 import { configureStore } from '../client/store';
@@ -89,6 +93,13 @@ const renderFullPage = (html, initialState) => {
         ${head.script.toString()}
 
         ${process.env.NODE_ENV === 'production' ? `<link rel='stylesheet' href='${assetsManifest['/app.css']}' />` : ''}
+        <link rel="stylesheet" href="css/bootstrap-responsive.min.css" />
+        <link rel="stylesheet" href="css/fullcalendar.css" />
+        <link rel="stylesheet" href="css/matrix-style.css" />
+        <link rel="stylesheet" href="css/matrix-media.css" />
+        <link href="font-awesome/css/font-awesome.css" rel="stylesheet" />
+        <link rel="stylesheet" href="css/jquery.gritter.css" />
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap-theme.min.css">

@@ -99,7 +99,7 @@ class Setting extends Component {
         <Row>
           <SettingNavBar onCreateSetting={this.onCreateSetting} />
         </Row>
-        <Row>
+        <Row style={{ paddingLeft: '20px', paddingRight: '20px' }}>
           <SettingList modifyDialog={this.modifyDialog} />
         </Row>
 

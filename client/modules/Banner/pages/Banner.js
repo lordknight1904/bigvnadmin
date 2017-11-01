@@ -93,7 +93,7 @@ class Banner extends Component {
         <Row>
           <BannerNavBar onCreate={this.onCreate} />
         </Row>
-        <Row>
+        <Row style={{ paddingLeft: '20px', paddingRight: '20px' }}>
           <BannerList setPreview={this.setPreview} />
         </Row>
 

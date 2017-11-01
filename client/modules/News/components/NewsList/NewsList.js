@@ -45,7 +45,7 @@ class NewList extends Component {
       <Tooltip id="tooltip" label="infoTooltip">Preview tin</Tooltip>
     );
     return (
-      <Table striped bordered condensed hover className={styles.table}>
+      <table className={`table table-bordered table-striped ${styles.table}`}>
         <thead>
           <tr>
             <th style={{ width: '40%' }}>Tiêu đề</th>
@@ -95,7 +95,7 @@ class NewList extends Component {
           })
         }
         </tbody>
-      </Table>
+      </table>
     );
   }
 }

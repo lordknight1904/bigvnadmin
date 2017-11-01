@@ -103,7 +103,7 @@ class District extends Component {
         <Row>
           <DistrictNavBar onCreateDistrict={this.onCreateDistrict} />
         </Row>
-        <Row>
+        <Row style={{ paddingLeft: '20px', paddingRight: '20px' }}>
           <DistrictList showDialog={this.showDialog} onEdit={this.onEdit} />
         </Row>
 

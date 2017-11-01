@@ -92,7 +92,7 @@ class MenuNews extends Component {
         <Row>
           <MenuNewsNavBar onCreateMenuNews={this.onCreateMenuNews}/>
         </Row>
-        <Row>
+        <Row style={{ paddingLeft: '20px', paddingRight: '20px' }}>
           <MenuNewsList onEdit={this.onEdit} />
         </Row>
 

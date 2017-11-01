@@ -77,51 +77,46 @@ class Login extends Component {
   };
   render() {
     return (
-      <Col sm={12} md={4} mdOffset={4} style={{ top: '25vh' }}>
+      <Col sm={12} md={4} mdOffset={4} style={{ top: '25vh', backgroundColor: 'white', padding: '0' }}>
         <div className={`panel panel-default ${styles.loginPanel}`} >
-          <div className={`panel-heading ${styles.headerLogin}`}><h5>Đăng nhập</h5></div>
-          <Form horizontal className="panel-body">
+          <div className={`panel-heading ${styles.headerLogin}`}>
+            <img src="/banner/logo.png" />
+          </div>
+          <Form horizontal className="panel-body col-md-10 col-md-offset-1">
             <FormGroup controlId="formHorizontalEmail">
-              <Col componentClass={ControlLabel} sm={4}>
-                Tài khoản
-              </Col>
-              <Col sm={8}>
-                <FormControl
-                  type="text"
-                  value={this.state.userName}
-                  onChange={this.handleUserName}
-                  onBlur={this.handleUserNameBlur}
-                  onKeyDown={this.onKeyDown}
-                />
-              </Col>
+              <FormControl
+                type="text"
+                value={this.state.userName}
+                onChange={this.handleUserName}
+                onBlur={this.handleUserNameBlur}
+                onKeyDown={this.onKeyDown}
+                placeholder="Tài khoản"
+              />
             </FormGroup>
             <FormGroup controlId="formHorizontalPassword">
-              <Col componentClass={ControlLabel} sm={4}>
-                Mật khẩu
-              </Col>
-              <Col sm={8}>
-                <FormControl
-                  type="password"
-                  value={this.state.password}
-                  onChange={this.handlePassword}
-                  onBlur={this.handlePasswordBlur}
-                  onKeyDown={this.onKeyDown}
-                />
-              </Col>
+              <FormControl
+                type="password"
+                value={this.state.password}
+                onChange={this.handlePassword}
+                onBlur={this.handlePasswordBlur}
+                onKeyDown={this.onKeyDown}
+                placeholder="Mật khẩu"
+              />
             </FormGroup>
 
             <FormGroup>
-              <Col smOffset={4} sm={8} className="text-right">
-                <button disabled={this.state.isSigningIn} onClick={this.onSigningIn} className={styles.inputRegistryButton}>
-                  Đăng nhập
-                </button>
-              </Col>
+              <Button
+                disabled={this.state.isSigningIn}
+                onClick={this.onSigningIn}
+                block
+                className={styles.inputRegistryButton}
+              >
+                Đăng nhập
+              </Button>
             </FormGroup>
 
             <FormGroup controlId="error" validationState="error" >
-              <Col sm={6} smOffset={3} >
-                <HelpBlock>{this.state.error}</HelpBlock>
-              </Col>
+              <HelpBlock>{this.state.error}</HelpBlock>
             </FormGroup>
           </Form>
         </div>

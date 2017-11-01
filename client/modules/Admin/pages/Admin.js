@@ -152,7 +152,7 @@ class Admin extends Component {
         <Row>
           <AdminNavBar onRegister={this.onRegister}/>
         </Row>
-        <Row>
+        <Row style={{ paddingLeft: '20px', paddingRight: '20px' }}>
           <AdminList showDialog={this.showDialog}/>
         </Row>
 

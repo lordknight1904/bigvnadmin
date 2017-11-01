@@ -91,7 +91,7 @@ class City extends Component {
         <Row>
           <CityNavBar onCreateCity={this.onCreateCity} />
         </Row>
-        <Row>
+        <Row style={{ paddingLeft: '20px', paddingRight: '20px' }}>
           <CityList showDialog={this.showDialog} onEdit={this.onEdit} />
         </Row>
 

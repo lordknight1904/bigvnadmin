@@ -41,10 +41,16 @@ body {
 
 .table {
   table-layout: fixed;
+  padding-left: 10px;
+  padding-right: 10px;
 }
-.table >thead {
-  background-color: #093750;
+.table > thead {
+  background-color: #EFEFEF;
   color: #fff;
+}
+.table > thead > tr {
+  line-height: 15pt;
+  font-size: 12pt;
 }
 .table >thead >tr >th {
   text-align: center;
@@ -56,21 +62,25 @@ body {
   background-color: #fafbde;
 }
 .headerLogin {
-  border-bottom: 1px solid #ccc;
-  text-align: left;
+  border-bottom: 1px solid #ccc !important;
+  background-image: none !important;
+  background-color: rgb(4, 78, 125) !important;
+  text-align: center;
 }
 .loginPanel {
   padding: 0px;
   margin:0;
 }
 .inputRegistryButton {
-  /*text-align: center;*/
-  /*width: 100%;*/
-  /*background-color: #349708;*/
-  /*border: 0;*/
-  /*color: #FFF;*/
-  /*padding: 7px;*/
-  /*position: relative;*/
+  background-color: rgb(4, 78, 125);
+  background-image: none;
+  color: white;
+  padding: 7px;
+}
+.inputRegistryButton:hover {
+  background-color: rgb(4, 78, 125);
+  background-image: none;
+  color: white;
   padding: 7px;
 }
 .titleOverFlow {
@@ -84,23 +94,23 @@ body {
 
 .cointain >div {
   width: 100% !important;
-  padding-top: 10px;
-  padding-bottom: 7px;
+  padding-top: 10px !important;
+  padding-bottom: 7px !important;
 }
 .cointain>ul>li>a {
   padding: 0 !important;
-  display: block;
+  display: block !important;
 }
 .navPageItem {
-  padding-right: 5px;
+  padding-right: 5px !important;
 }
 .navPageItem>a{
   padding: 0 !important;
-  display: block;
+  display: block !important;
 }
 .pageInfo {
-  margin:0px;
+  margin:0px !important;
 }
 .pageInfo>li>a {
-  height: 34px;
+  height: 34px !important;
 }
