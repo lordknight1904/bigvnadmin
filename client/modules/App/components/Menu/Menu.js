@@ -77,6 +77,9 @@ class Menu extends Component{
           this.state.menu ? ( <MenuItem className={styles.subMenu} eventKey="menublog">Blog</MenuItem> ) : ''
         }
 
+        <NavItem eventKey="keyword">
+          Từ khóa
+        </NavItem>
         <NavItem eventKey="banner">
           Quảng cáo
         </NavItem>

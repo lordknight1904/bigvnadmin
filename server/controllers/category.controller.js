@@ -50,7 +50,8 @@ export function createCategory(req, res) {
 export function updateCategory(req, res) {
   const reqCategory =  req.body.category;
   if (reqCategory &&
-    reqCategory.hasOwnProperty('title')
+    reqCategory.hasOwnProperty('title') &&
+    reqCategory.hasOwnProperty('_id')
   ) {
     const alias = KhongDau(reqCategory.title).trim().toLowerCase().replace(/ /g, "-");
     Category.updateOne({ _id: mongoose.Types.ObjectId(reqCategory.id) }, { title: reqCategory.title.toUpperCase(), alias }).exec((err) => {

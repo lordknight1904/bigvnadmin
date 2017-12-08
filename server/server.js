@@ -50,6 +50,7 @@ import banners from './routes/banner.routes';
 import categories from './routes/category.routes';
 import topics from './routes/topic.routes';
 import settings from './routes/setting.routes';
+import keywords from './routes/keyword.routes';
 import serverConfig from './config';
 import dummyData from './dummyData';
 
@@ -73,7 +74,7 @@ app.use(compression());
 app.use(bodyParser.json({ limit: '20mb' }));
 app.use(bodyParser.urlencoded({ limit: '20mb', extended: false }));
 app.use(Express.static(path.resolve(__dirname, '../dist/client')));
-app.use('/api', [topics, settings, news, banners, cities, districts, categories, wards, admins, users]);
+app.use('/api', [topics, settings, news, banners, cities, districts, categories, wards, keywords, admins, users]);
 
 // Render Initial HTML
 const renderFullPage = (html, initialState) => {

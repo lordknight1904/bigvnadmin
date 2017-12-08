@@ -29,6 +29,7 @@ if (process.env.NODE_ENV !== 'production') {
   require('./modules/MenuBlog/pages/MenuBlog');
   require('./modules/Blog/pages/Blog');
   require('./modules/Setting/pages/Setting');
+  require('./modules/Keyword/pages/Keyword');
 }
 
 // react-router setup with code-splitting
@@ -39,6 +40,14 @@ export default (
       getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/Login/pages/Login').default);
+        });
+      }}
+    />
+    <Route
+      path="/keyword"
+      getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/Keyword/pages/Keyword.js').default);
         });
       }}
     />
