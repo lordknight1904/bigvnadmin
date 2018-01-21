@@ -14,12 +14,18 @@ export function getTopics(req, res) {
 export function createTopic(req, res) {
   const reqTopic =  req.body.topic;
   if (reqTopic &&
-    reqTopic.hasOwnProperty('title')
+    reqTopic.hasOwnProperty('name') &&
+    reqTopic.hasOwnProperty('title') &&
+    reqTopic.hasOwnProperty('metaKeyword') &&
+    reqTopic.hasOwnProperty('metaDescription')
   ) {
     const alias = KhongDau(reqTopic.title).trim().toLowerCase().replace(/ /g, "-");
     const topic = new Topic({
-      title: reqTopic.title.toUpperCase(),
+      name: reqTopic.name.toUpperCase(),
       alias,
+      title: reqTopic.title,
+      metaKeyword: reqTopic.metaKeyword,
+      metaDescription: reqTopic.metaDescription,
     });
     topic.save((err2) => {
       if (err2) {
@@ -68,7 +74,15 @@ export function updateTopic(req, res) {
     reqTopic.hasOwnProperty('title')
   ) {
     const alias = KhongDau(reqTopic.title).trim().toLowerCase().replace(/ /g, "-");
-    Topic.updateOne({ _id: mongoose.Types.ObjectId(reqTopic.id) }, { title: reqTopic.title.toUpperCase(), alias }).exec((err) => {
+    Topic.updateOne(
+      { _id: mongoose.Types.ObjectId(reqTopic.id) },
+      {
+        name: reqTopic.name.toUpperCase(),
+        title: reqTopic.title,
+        metaKeyword: reqTopic.metaKeyword,
+        metaDescription: reqTopic.metaDescription,
+        alias
+      }).exec((err) => {
       if (err) {
         res.json({ topic: 'error' });
       } else {

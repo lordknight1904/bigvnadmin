@@ -21,12 +21,12 @@ class MenuNewsList extends Component {
       <Table striped bordered condensed hover className={styles.table}>
         <thead>
           <tr>
-            <th>Id</th>
+            <th>Tên</th>
             <th>Tiêu đề</th>
             <th>alias</th>
-            <th>Mô tả</th>
-            <th>status</th>
-            <th>Sửa tên danh mục</th>
+            <th>Meta Keyword</th>
+            <th>Meta Description</th>
+            <th style={{ width: '10%' }}>Sửa</th>
             <th>Ngày tạo</th>
           </tr>
         </thead>
@@ -35,11 +35,11 @@ class MenuNewsList extends Component {
           this.props.menuNews.map((menu, index) => {
             return (
               <tr key={index}>
-                <td>{menu.term_id}</td>
+                <td>{menu.name}</td>
                 <td>{menu.title}</td>
                 <td>{menu.alias}</td>
-                <td>{menu.description}</td>
-                <td>{menu.status}</td>
+                <td>{menu.metaKeyword}</td>
+                <td>{menu.metaDescription}</td>
                 <td>
                   <Button onClick={() => this.props.onEdit(menu)}>Sửa</Button>
                 </td>

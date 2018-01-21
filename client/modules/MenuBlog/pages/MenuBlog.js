@@ -16,6 +16,7 @@ class MenuBlog extends Component {
       isCreateMenuBlog: false,
       isCreatingMenuBlog: false,
 
+      name: '',
       title: '',
       metaKeyword: '',
       metaDescription: '',
@@ -23,6 +24,9 @@ class MenuBlog extends Component {
 
       editMenuId: '',
       editMenuName: '',
+      editMenuTitle: '',
+      editMenuMetaKeyword: '',
+      editMenuMetaDescription: '',
       editingMenu: false,
       isEdit: false,
     }
@@ -40,7 +44,10 @@ class MenuBlog extends Component {
   };
   creatingMenuBlog = () => {
     const topic = {
+      name: this.state.name,
       title: this.state.title,
+      metaKeyword: this.state.metaKeyword,
+      metaDescription: this.state.metaDescription,
     };
     this.setState({ isCreatingMenuBlog: true });
     this.props.dispatch(createMenuBlog(topic)).then((res) => {
@@ -48,13 +55,32 @@ class MenuBlog extends Component {
       this.props.dispatch(fetchMenuBlog(this.props.currentPage - 1))
     });
   };
+  handleName = (event) => { this.setState({ name: event.target.value }); };
   handleTitle = (event) => { this.setState({ title: event.target.value }); };
+  handleMetaKeyword = (event) => { this.setState({ metaKeyword: event.target.value }); };
+  handleMetaDescription = (event) => { this.setState({ metaDescription: event.target.value }); };
 
   handleEditMenuName = (event) => {
     this.setState({ editMenuName: event.target.value });
   };
+  handleEditMenuTitle = (event) => {
+    this.setState({ editMenuTitle: event.target.value });
+  };
+  handleEditMetaKeyword  = (event) => {
+    this.setState({ editMenuMetaKeyword: event.target.value });
+  };
+  handleEditMetaDescription = (event) => {
+    this.setState({ editMenuMetaDescription: event.target.value });
+  };
   onEdit = (editMenu) => {
-    this.setState({ isEdit: true, editMenuId: editMenu._id, editMenuName: editMenu.title });
+    this.setState({
+      isEdit: true,
+      editMenuId: editMenu._id,
+      editMenuName: editMenu.name,
+      editMenuTitle: editMenu.title,
+      editMetaKeyword: editMenu.metaKeyword,
+      editMetaDescription: editMenu.metaDescription,
+    });
   };
   hideEdit = () => {
     this.setState({ isEdit: false, editMenuId: '', editMenuName: '' });
@@ -62,8 +88,11 @@ class MenuBlog extends Component {
   onSubmitEdit = () => {
     if (this.state.editMenuId !=='' && this.state.editMenuName !== '') {
       const menu = {
-        title: this.state.editMenuName,
         id: this.state.editMenuId,
+        name: this.state.editMenuName,
+        title: this.state.editMenuTitle,
+        metaKeyword: this.state.editMenuMetaKeyword,
+        metaDescription: this.state.editMenuMetaDescription,
       };
       this.setState({ editingMenu: true });
       this.props.dispatch(updateTopic(menu)).then((res) => {
@@ -103,8 +132,44 @@ class MenuBlog extends Component {
                 <Col sm={10}>
                   <FormControl
                     type="text"
+                    value={this.state.name}
+                    onChange={this.handleName}
+                  />
+                </Col>
+              </FormGroup>
+              <FormGroup>
+                <Col componentClass={ControlLabel} md={2}>
+                  Tiêu đề danh mục
+                </Col>
+                <Col md={10}>
+                  <FormControl
+                    type="text"
                     value={this.state.title}
                     onChange={this.handleTitle}
+                  />
+                </Col>
+              </FormGroup>
+              <FormGroup>
+                <Col componentClass={ControlLabel} sm={2}>
+                  Meta Keyword
+                </Col>
+                <Col sm={10}>
+                  <FormControl
+                    type="text"
+                    value={this.state.metaKeyword}
+                    onChange={this.handleMetaKeyword}
+                  />
+                </Col>
+              </FormGroup>
+              <FormGroup>
+                <Col componentClass={ControlLabel} sm={2}>
+                  Meta Description
+                </Col>
+                <Col sm={10}>
+                  <FormControl
+                    type="text"
+                    value={this.state.metaDescription}
+                    onChange={this.handleMetaDescription}
                   />
                 </Col>
               </FormGroup>
@@ -134,6 +199,42 @@ class MenuBlog extends Component {
                     type="text"
                     value={this.state.editMenuName}
                     onChange={this.handleEditMenuName}
+                  />
+                </Col>
+              </FormGroup>
+              <FormGroup controlId="formHorizontalEmail">
+                <Col componentClass={ControlLabel} sm={2}>
+                  Tiêu đề danh mục
+                </Col>
+                <Col sm={10}>
+                  <FormControl
+                    type="text"
+                    value={this.state.editMenuTitle}
+                    onChange={this.handleEditMenuTitle}
+                  />
+                </Col>
+              </FormGroup>
+              <FormGroup controlId="formHorizontalEmail">
+                <Col componentClass={ControlLabel} sm={2}>
+                  Meta Keyword
+                </Col>
+                <Col sm={10}>
+                  <FormControl
+                    type="text"
+                    value={this.state.editMenuMetaKeyword}
+                    onChange={this.handleEditMetaKeyword}
+                  />
+                </Col>
+              </FormGroup>
+              <FormGroup controlId="formHorizontalEmail">
+                <Col componentClass={ControlLabel} sm={2}>
+                  Meta Description
+                </Col>
+                <Col sm={10}>
+                  <FormControl
+                    type="text"
+                    value={this.state.editMenuMetaDescription}
+                    onChange={this.handleEditMetaDescription}
                   />
                 </Col>
               </FormGroup>

@@ -14,10 +14,10 @@ export function getCategories(req, res) {
 export function createCategory(req, res) {
   const reqCategory =  req.body.category;
   if (reqCategory &&
+    reqCategory.hasOwnProperty('name') &&
     reqCategory.hasOwnProperty('title') &&
     reqCategory.hasOwnProperty('metaKeyword') &&
-    reqCategory.hasOwnProperty('metaDescription') &&
-    reqCategory.hasOwnProperty('description')
+    reqCategory.hasOwnProperty('metaDescription')
   ) {
     Category.find({}, {}, { sort: { term_id: -1 } }).exec((err, doc) => {
       if (err) {
@@ -27,11 +27,11 @@ export function createCategory(req, res) {
         const alias = KhongDau(reqCategory.title).trim().toLowerCase().replace(/ /g, "-");
         const category = new Category({
           term_id,
-          title: reqCategory.title.toUpperCase(),
+          name: reqCategory.name.toUpperCase(),
           alias,
+          title: reqCategory.title,
           metaKeyword: reqCategory.metaKeyword,
           metaDescription: reqCategory.metaDescription,
-          description: reqCategory.description,
         });
         category.save((err2) => {
           if (err2) {
@@ -50,15 +50,26 @@ export function createCategory(req, res) {
 export function updateCategory(req, res) {
   const reqCategory =  req.body.category;
   if (reqCategory &&
+    reqCategory.hasOwnProperty('name') &&
     reqCategory.hasOwnProperty('title') &&
-    reqCategory.hasOwnProperty('_id')
+    reqCategory.hasOwnProperty('metaKeyword') &&
+    reqCategory.hasOwnProperty('metaDescription') &&
+    reqCategory.hasOwnProperty('id')
   ) {
     const alias = KhongDau(reqCategory.title).trim().toLowerCase().replace(/ /g, "-");
-    Category.updateOne({ _id: mongoose.Types.ObjectId(reqCategory.id) }, { title: reqCategory.title.toUpperCase(), alias }).exec((err) => {
+    Category.updateOne(
+      { _id: mongoose.Types.ObjectId(reqCategory.id) },
+      {
+        name: reqCategory.name.toUpperCase(),
+        title: reqCategory.title,
+        metaKeyword: reqCategory.metaKeyword,
+        metaDescription: reqCategory.metaDescription,
+        alias
+      }).exec((err) => {
       if (err) {
-        res.json({category: 'error'});
+        res.json({ category: 'error' });
       } else {
-        res.json({category: 'success'});
+        res.json({ category: 'success' });
       }
     });
   } else {

@@ -27,10 +27,11 @@ class MenuBlogList extends Component {
       <Table striped bordered condensed hover className={styles.table}>
         <thead>
           <tr>
+            <th>Tên</th>
             <th>Tiêu đề</th>
             <th>Alias</th>
             <th>Ngày tạo</th>
-            <th>Sửa</th>
+            <th style={{ width: '10%' }}>Sửa</th>
             <th className={styles.tableButtonCol}>Khóa</th>
           </tr>
         </thead>
@@ -39,6 +40,7 @@ class MenuBlogList extends Component {
           this.props.menuBlogs.map((menu, index) => {
             return (
               <tr key={index}>
+                <td>{menu.name}</td>
                 <td>{menu.title}</td>
                 <td>{menu.alias}</td>
                 <td>{dateFormat(menu.dateCreated, 'dd/mm/yyyy HH:mm')}</td>
